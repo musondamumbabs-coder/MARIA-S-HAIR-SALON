@@ -3,219 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maria's Hair Saloon | Book & Style</title>
+    <title>Maria's Hair Saloon | Book Your Style</title>
     <style>
         :root {
-            --primary: #db2777; /* Rose/Pink salon theme */
+            --primary: #db2777;
             --primary-hover: #be185d;
             --dark: #1e1b4b;
             --light: #fdf2f8;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
         body { background-color: #fafaf9; color: #334155; }
         
-        /* Navigation */
-        nav { background: var(--dark); color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-        nav h1 { font-size: 1.5rem; color: #fbcfe8; }
-        .nav-links button { background: none; border: none; color: white; margin-left: 15px; cursor: pointer; font-size: 1rem; }
-        .nav-links button:hover { color: var(--primary); }
+        nav { background: var(--dark); color: white; padding: 20px; text-align: center; }
+        nav h1 { font-size: 1.8rem; color: #fbcfe8; }
+        nav p { font-size: 0.9rem; color: #94a3b8; margin-top: 5px; }
 
-        /* Hero & Customer Section */
-        .hero { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; height: 350px; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
-        .hero h2 { font-size: 3rem; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; height: 300px; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
+        .hero h2 { font-size: 2.5rem; margin-bottom: 10px; }
         
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
         
-        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-top: 4px solid var(--primary); }
-        .card h3 { margin-bottom: 10px; color: var(--dark); }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
+        .card h3 { margin-bottom: 15px; color: var(--dark); }
         
-        /* Forms */
-        input, select, textarea { width: 100%; padding: 10px; margin: 8px 0 15px 0; border: 1px solid #cbd5e1; border-radius: 6px; }
-        button.btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
+        button.btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
         button.btn:hover { background: var(--primary-hover); }
 
-        /* Owner Dashboard Panel (Hidden by default) */
-        #owner-panel { display: none; background: #f1f5f9; padding: 30px; border-radius: 12px; margin-top: 30px; border: 2px dashed var(--primary); }
-        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        
-        .alert-box { background: #dcfce7; color: #166534; padding: 15px; border-radius: 6px; margin-bottom: 15px; display: none; }
+        .promo-banner { background: var(--light); border: 2px solid #fbcfe8; text-align: center; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
     </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
     <nav>
         <h1>💇‍♀️ Maria's Hair Saloon</h1>
-        <div class="nav-links">
-            <button onclick="showSection('customer')">Customer View</button>
-            <button onclick="showSection('owner')" style="color: #fda4af; font-weight: bold;">🔑 Owner Login</button>
-        </div>
+        <p>Your home for beautiful, clean, and neat protective hairstyles.</p>
     </nav>
 
-    <!-- CUSTOMER SIDE -->
-    <div id="customer-side">
-        <div class="hero">
-            <h2>Flawless Plaits, Every Time</h2>
-            <p>Book your knotless braids, lines, twists, and protective styles today.</p>
-        </div>
-
-        <div class="container">
-            <!-- Active Promotion Banner -->
-            <div class="card" style="background: var(--light); text-align: center; margin-bottom: 30px;">
-                <h3 style="color: var(--primary);">📢 Current Promotion!</h3>
-                <p id="promo-banner-text">End of Month Braids Special! Get 15% off any lines or knotless plaiting this Friday!</p>
-            </div>
-
-            <div class="grid">
-                <!-- Appointment Booking -->
-                <div class="card">
-                    <h3>📅 Book an Appointment</h3>
-                    <form id="booking-form" onsubmit="handleBooking(event)">
-                        <label>Your Name</label>
-                        <input type="text" required placeholder="Enter full name">
-                        
-                        <label>Select Hairstyle</label>
-                        <select id="hair-style-select">
-                            <option>Knotless Braids - K250</option>
-                            <option>Lines / Cornrows - K100</option>
-                            <option>Box Braids - K200</option>
-                            <option>Spring Twists - K300</option>
-                        </select>
-                        
-                        <label>Date & Time</label>
-                        <input type="datetime-local" required>
-                        
-                        <button type="submit" class="btn">Submit Booking</button>
-                    </form>
-                </div>
-
-                <!-- Email Subscription -->
-                <div class="card">
-                    <h3>💌 Join Our VIP List</h3>
-                    <p style="font-size: 0.9rem; margin-bottom: 10px; color:#64748b;">Get instant emails whenever Maria drops massive discounts or special holiday styles!</p>
-                    <form id="subscribe-form" onsubmit="handleSubscribe(event)">
-                        <label>Email Address</label>
-                        <input type="email" required placeholder="yourname@gmail.com">
-                        <button type="submit" class="btn" style="background: var(--dark);">Subscribe for Alerts</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="hero">
+        <h2>Flawless Plaits, Every Time</h2>
+        <p>Book your knotless braids, lines, twists, and protective styles today.</p>
     </div>
 
-    <!-- OWNER SIDE -->
-    <div id="owner-side" class="container">
-        <div id="owner-panel">
-            <div class="dashboard-header">
-                <h2>Admin Management Dashboard</h2>
-                <button onclick="showSection('customer')" style="padding: 5px 10px;">Exit Dashboard</button>
-            </div>
-            
-            <div class="alert-box" id="status-alert">Action successfully processed!</div>
+    <div class="container">
+        <div class="promo-banner">
+            <h3 style="color: var(--primary); margin-bottom: 5px;">📢 Special Announcement</h3>
+            <p id="live-promo-display">Loading current promotions...</p>
+        </div>
 
-            <div class="grid">
-                <!-- Promo Broadcaster Panel -->
-                <div class="card" style="grid-column: span 2;">
-                    <h3>📣 Quick-Blast Promotion Creator</h3>
-                    <p style="font-size: 0.85rem; color: #64748b; margin-bottom: 15px;">Select a holiday or theme template below. You can fully tweak the text before launching it live.</p>
+        <div class="grid">
+            <div class="card">
+                <h3>📅 Secure Your Slot</h3>
+                <form onsubmit="handleBooking(event)">
+                    <label>Your Name</label>
+                    <input type="text" required placeholder="Enter your full name">
                     
-                    <label>Choose a Marketing Category (100 options preloaded)</label>
-                    <select id="category-selector" onchange="loadCategoryTemplates()">
-                        <option value="weekend">☀️ Weekend / Flash Sales</option>
-                        <option value="holidays">🎉 Major Public Holidays</option>
-                        <option value="seasonal">🍂 Back To School & Seasonal</option>
+                    <label>Select Hairstyle</label>
+                    <select>
+                        <option>Knotless Braids - K250</option>
+                        <option>Lines / Cornrows - K100</option>
+                        <option>Box Braids - K200</option>
+                        <option>Spring Twists - K300</option>
                     </select>
+                    
+                    <label>Preferred Date & Time</label>
+                    <input type="datetime-local" required>
+                    
+                    <button type="submit" class="btn">Submit Appointment</button>
+                </form>
+            </div>
 
-                    <label>Select Draft Template</label>
-                    <select id="template-selector" onchange="applyTemplateToEditor()">
-                        <!-- Loaded dynamically via JavaScript -->
-                    </select>
-
-                    <label>Edit Your Final Message</label>
-                    <textarea id="live-promo-text" rows="4">Weekend Special! Book any plaiting style this Friday and get a free wash and treatment!</textarea>
-
-                    <div style="margin: 15px 0;">
-                        <input type="checkbox" id="notify-customers-check" style="width: auto; margin-right: 10px;" checked>
-                        <label for="notify-customers-check" style="font-weight: bold; color: var(--primary);">📧 Simultaneously blast notification to all subscribed customer emails</label>
-                    </div>
-
-                    <button class="btn" onclick="publishPromo()">Publish Live to Website</button>
-                </div>
+            <div class="card">
+                <h3>💌 Join Our VIP List</h3>
+                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 15px;">Get an immediate email notification whenever Maria launches new holiday deals, price cuts, or slot updates.</p>
+                <form onsubmit="handleSubscribe(event)">
+                    <label>Your Email Address</label>
+                    <input type="email" required placeholder="example@gmail.com">
+                    <button type="submit" class="btn" style="background: var(--dark);">Subscribe for Updates</button>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
-        // Toggle view logic
-        function showSection(section) {
-            if(section === 'owner') {
-                document.getElementById('customer-side').style.display = 'none';
-                document.getElementById('owner-side').style.display = 'block';
-                document.getElementById('owner-panel').style.display = 'block';
-            } else {
-                document.getElementById('customer-side').style.display = 'block';
-                document.getElementById('owner-side').style.display = 'none';
-            }
-        }
+        // Placeholder text until database is connected
+        document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting holiday promotions.";
 
-        // 100 Options Smart Message Bank Array
-        const messageBank = {
-            weekend: [
-                "☀️ Friday Braids Special! Book any knotless plaiting style today and claim a free wash!",
-                "✨ Weekend Refresh! Get K50 off your appointment price if you book before Saturday noon.",
-                "🔋 Sunday Pampering: Treat yourself to a clean set of protective lines ready for the work week!"
-            ],
-            holidays: [
-                "🇿🇲 Happy Independence Day! Wear your hair proud with 20% off all cultural cornrow designs.",
-                "🎄 Merry & Bright! Holiday booking slots are now officially open. Lock yours in before spaces fill up!",
-                "🐣 Easter Weekend Glamour! Bring a family member along and get a combined discount on all box braids.",
-                "❤️ Valentine's Day Special: Love is in the hair! Book with your bestie and get free hair accessories."
-            ],
-            seasonal: [
-                "📚 Back to School lines! Neat, durable, and comfortable school styles for kids and teens at discounted flat rates.",
-                "❄️ Cold Weather Protection: Get beautiful twist extensions to shield your hair matrix from dryness this season!"
-            ]
-        };
-
-        function loadCategoryTemplates() {
-            const cat = document.getElementById('category-selector').value;
-            const select = document.getElementById('template-selector');
-            select.innerHTML = '';
-            messageBank[cat].forEach((text, index) => {
-                let opt = document.createElement('option');
-                opt.value = text;
-                opt.innerText = text.substring(0, 60) + "...";
-                select.appendChild(opt);
-            });
-            applyTemplateToEditor();
-        }
-
-        function applyTemplateToEditor() {
-            document.getElementById('live-promo-text').value = document.getElementById('template-selector').value;
-        }
-
-        function publishPromo() {
-            const newText = document.getElementById('live-promo-text').value;
-            document.getElementById('promo-banner-text').innerText = newText;
-            
-            const alertBox = document.getElementById('status-alert');
-            alertBox.style.display = "block";
-            
-            if(document.getElementById('notify-customers-check').checked) {
-                alertBox.innerText = "🚀 Promo updated on site & notification email commands broadcasted!";
-            } else {
-                alertBox.innerText = "💻 Promotion posted directly onto website homepage.";
-            }
-            
-            setTimeout(() => alertBox.style.display = "none", 4000);
-        }
-
-        function handleBooking(e) { e.preventDefault(); alert('📅 Booking details saved! Ready to pair with backend database storage.'); }
-        function handleSubscribe(e) { e.preventDefault(); alert('💌 Email address saved securely to our subscribers list!'); }
-
-        // Initial setup run
-        window.onload = loadCategoryTemplates;
+        function handleBooking(e) { e.preventDefault(); alert('Booking submitted successfully!'); }
+        function handleSubscribe(e) { e.preventDefault(); alert('Subscribed to VIP mailing list!'); }
     </script>
 </body>
 </html>
