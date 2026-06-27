@@ -166,10 +166,42 @@
             }
         }
 
-        window.handleSubscribe = function(e) { 
-            e.preventDefault(); 
-            alert('💌 Subscribed to Maria\'s VIP promotional list successfully!'); 
-        }
+       // Smart Form Submission Engine
+import { push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+window.handleBooking = function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('customer-name').value;
+    const style = document.getElementById('customer-style').value;
+    const timeRaw = document.getElementById('customer-time').value;
+    const timeFormatted = timeRaw.replace('T', ' at ');
+    const chosenMethod = document.querySelector('input[name="comm-method"]:checked').value;
+
+    if (chosenMethod === 'whatsapp') {
+        const whatsappNumber = "260961347528"; 
+        const message = `Hello Maria! My name is ${name}. I am using your salon website and I would love to book an appointment for ${style} on ${timeFormatted}. Is this slot open?`;
+        const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    } else {
+        // Save booking data cleanly to Firebase under 'salon/bookings'
+        const bookingsRef = ref(database, 'salon/bookings');
+        push(bookingsRef, {
+            customerName: name,
+            hairstyle: style,
+            appointmentTime: timeFormatted,
+            timestamp: new Date().toISOString()
+        })
+        .then(() => {
+            alert(`✉️ Booking submitted! Maria will view your request for ${style} and contact you via email shortly.`);
+            document.getElementById('customer-name').value = '';
+            document.getElementById('customer-time').value = '';
+        })
+        .catch((err) => {
+            alert("Error submitting booking: " + err.message);
+        });
+    }
+}
     </script>
 </body>
 </html>
