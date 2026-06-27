@@ -125,6 +125,22 @@
         } else {
             document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting promotions.";
         }
+        window.openWhatsApp = function() {
+    // Maria's number with international country code (e.g., 260 for Zambia + her phone digits)
+    const whatsappNumber = "260961347528"; 
+    
+    // Check if they typed a name or style already to pre-fill the message text cleanly
+    const name = document.getElementById('customer-name').value || "there";
+    const style = document.getElementById('customer-style').value;
+    
+    const message = `Hello Maria! My name is ${name}. I am checking out your salon website and I'd love to inquire about getting my hair done (${style}). Are you available?`;
+    
+    // Encode text to ensure space characters load perfectly across web browsers
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    
+    // Open in a new secure browser window tab
+    window.open(url, '_blank');
+}
     });
 
     window.handleBooking = function(e) { e.preventDefault(); alert('Booking submitted successfully!'); }
