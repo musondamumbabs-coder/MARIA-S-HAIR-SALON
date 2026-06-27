@@ -86,12 +86,33 @@
         </div>
     </div>
 
-    <script>
-        // Placeholder text until database is connected
-        document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting holiday promotions.";
+    <script type="module">
+    // 1. Import Firebase Libraries
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        function handleBooking(e) { e.preventDefault(); alert('Booking submitted successfully!'); }
-        function handleSubscribe(e) { e.preventDefault(); alert('Subscribed to VIP mailing list!'); }
-    </script>
-</body>
-</html>
+    // 2. YOUR FIREBASE CONFIGURATION (Paste the exact same keys here!)
+    const firebaseConfig = {
+        apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
+        authDomain: "maria-s-hair-salon.firebaseapp.com",
+        databaseURL: "https://maria-s-hair-salon-default-rtdb.firebaseio.com"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // 3. Listen live to database changes
+    const promoRef = ref(database, 'salon/currentPromo');
+    onValue(promoRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+            document.getElementById('live-promo-display').innerText = data;
+        } else {
+            document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting promotions.";
+        }
+    });
+
+    window.handleBooking = function(e) { e.preventDefault(); alert('Booking submitted successfully!'); }
+    window.handleSubscribe = function(e) { e.preventDefault(); alert('Subscribed to VIP mailing list!'); }
+</script>
