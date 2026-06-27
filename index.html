@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maria's Hair Saloon | Book Your Style</title>
+    <title>Maria's Salon | Elite CMS Admin Panel</title>
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #db2777;
@@ -12,131 +17,167 @@
             --light: #fdf2f8;
             --slate: #f8fafc;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: #fafaf9; color: #334155; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #334155; }
         
-        /* Navigation Tabs Menu styling */
-        nav { background: var(--dark); color: white; padding: 15px 20px; position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); }
-        nav h1 { font-size: 1.4rem; color: #fbcfe8; cursor: pointer; }
-        nav ul { display: flex; list-style: none; gap: 20px; }
-        nav ul li a { color: #e2e8f0; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.2s; cursor: pointer; }
-        nav ul li a:hover, nav ul li a.active { color: var(--primary); }
+        header { background: var(--dark); color: white; padding: 25px 20px; border-bottom: 4px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }
+        header h1 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: #fbcfe8; }
+        header span { background: rgba(255,255,255,0.1); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; letter-spacing: 0.5px; }
 
-        /* Page Display Visibility Controllers */
-        .page-section { display: none; padding: 40px 20px; max-width: 1000px; margin: 0 auto; animation: fadeIn 0.3s ease-in-out forwards; }
-        .page-section.active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        @media(max-width: 900px) { .admin-container { grid-template-columns: 1fr; } }
 
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; height: 300px; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
-        .hero h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .admin-card { background: white; padding: 30px; border-radius: 14px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-top: 4px solid #cbd5e1; height: fit-content; }
+        .admin-card.accent { border-top-color: var(--primary); }
+        .admin-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--dark); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
-        .card h3 { margin-bottom: 15px; color: var(--dark); }
+        label { display: block; font-weight: 500; font-size: 0.9rem; margin-bottom: 6px; color: #475569; }
+        input, select, textarea { width: 100%; padding: 10px 14px; margin-bottom: 16px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.95rem; background: var(--slate); font-family: inherit; }
         
-        input, select { width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; background: #fff; }
-        button.btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
-        button.btn:hover { background: var(--primary-hover); }
+        .checkbox-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; background: var(--light); padding: 10px; border-radius: 6px; border: 1px dashed #fbcfe8; }
+        .checkbox-wrapper input { width: auto; margin: 0; cursor: pointer; }
+        .checkbox-wrapper label { margin: 0; cursor: pointer; font-weight: 600; color: var(--primary); }
 
-        .promo-banner { background: var(--light); border: 2px solid #fbcfe8; text-align: center; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
-        .radio-group { display: flex; gap: 15px; margin: 8px 0 20px 0; }
-        .radio-option { display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; }
-        .radio-option input { width: auto; margin: 0; cursor: pointer; }
+        button.btn { background: var(--dark); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.95rem; transition: background 0.2s; }
+        button.btn:hover { background: #2e2a78; }
+        button.btn.primary-btn { background: var(--primary); }
+        button.btn.primary-btn:hover { background: var(--primary-hover); }
+
+        /* Realtime lists management lists */
+        .data-list { max-height: 320px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 8px; margin-top: 15px; background: var(--slate); }
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid #e2e8f0; background: white; }
+        .list-item:last-child { border-bottom: none; }
+        .list-item-info h5 { font-weight: 600; color: var(--dark); }
+        .list-item-info p { font-size: 0.8rem; color: #64748b; }
+        .delete-icon { background: #ef4444; color: white; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .delete-icon:hover { background: #dc2626; }
+
+        /* Booking feed adjustments */
+        .booking-feed { grid-column: 1 / -1; }
+        .booking-table-wrapper { overflow-x: auto; background: white; border-radius: 8px; border: 1px solid #e2e8f0; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+        th { background: #f8fafc; color: #475569; padding: 14px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+        td { padding: 14px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+        tr:last-child td { border-bottom: none; }
+        .specs-cell { font-size: 0.85rem; color: #475569; background: #f8fafc; padding: 8px; border-radius: 4px; max-width: 250px; word-wrap: break-word; }
     </style>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
-    <nav>
-        <h1 onclick="switchPage('home')">💇‍♀️ Maria's Hair Saloon</h1>
-        <ul>
-            <li><a id="nav-home" onclick="switchPage('home')" class="active">Home Landing</a></li>
-            <li><a id="nav-booking" onclick="switchPage('booking')">Book Appointment</a></li>
-            <li><a id="nav-vip" onclick="switchPage('vip')">VIP Club Signup</a></li>
-        </ul>
-    </nav>
+    <header>
+        <h1>💇‍♀️ Maria's Lookbook CMS Control Panel</h1>
+        <span>🔴 LIVE DATA SYNC ACTIVE</span>
+    </header>
 
-    <div id="page-home" class="page-section active-page">
-        <div class="hero">
-            <h2>Flawless Plaits, Every Time</h2>
-            <p>Book your knotless braids, lines, twists, and protective styles today.</p>
-        </div>
+    <div class="admin-container">
         
-        <div class="promo-banner">
-            <h3 style="color: var(--primary); margin-bottom: 5px;">📢 Special Announcement</h3>
-            <p id="live-promo-display">Loading current promotions...</p>
-        </div>
-
-        <div style="text-align: center; margin-top: 30px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
-            <h3 style="color: var(--dark); margin-bottom: 10px;">Your Home for Neat Protective Styling</h3>
-            <p style="color: #64748b; max-width: 600px; margin: 0 auto 20px;">We specialize in beautiful, clean, and crisp styling loops built around your custom schedule demands.</p>
-            <button class="btn" style="max-width: 250px;" onclick="switchPage('booking')">Go to Booking System →</button>
-        </div>
-    </div>
-
-    <div id="page-booking" class="page-section">
-        <div class="card" style="max-width: 650px; margin: 0 auto;">
-            <h3>📅 Secure Your Slot</h3>
-            <form onsubmit="handleBooking(event)">
-                <label>Your Name</label>
-                <input type="text" id="customer-name" required placeholder="Enter your full name">
+        <!-- MODULE 1: LANDING PAGE HERO MANAGER -->
+        <div class="admin-card accent">
+            <h3>🖼️ Homepage Banner & Cover Manager</h3>
+            <form id="hero-form" onsubmit="updateHeroBanner(event)">
+                <label>Main Headline text</label>
+                <input type="text" id="hero-headline-input" required placeholder="e.g., Flawless Plaits, Every Time">
                 
-                <label>Select Hairstyle</label>
-                <select id="customer-style">
-                    <option>Knotless Braids - K250</option>
-                    <option>Lines / Cornrows - K100</option>
-                    <option>Box Braids - K200</option>
-                    <option>Spring Twists - K300</option>
-                </select>
+                <label>Subtext Description / Promotion Announcement</label>
+                <textarea id="hero-subtext-input" required placeholder="e.g., Special Holiday Discount: Book your box braids now and get K50 off!"></textarea>
                 
-                <label>Preferred Date & Time</label>
-                <input type="datetime-local" id="customer-time" required>
+                <label>Cover Photo Image URL</label>
+                <input type="url" id="hero-image-input" required placeholder="Paste unsplash or web image link address">
                 
-                <label>How should we finalize your booking?</label>
-                <div class="radio-group">
-                    <label class="radio-option">
-                        <input type="radio" name="comm-method" value="whatsapp" checked onclick="toggleEmailField(false)"> 🟢 Confirm via WhatsApp
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="comm-method" value="email" onclick="toggleEmailField(true)"> ✉️ Confirm via Email
-                    </label>
-                </div>
-
-                <div id="email-input-container" style="display: none;">
-                    <label>Your Email Address</label>
-                    <input type="email" id="customer-email" placeholder="yourname@gmail.com">
-                </div>
-                
-                <button type="submit" class="btn">Submit Booking</button>
+                <button type="submit" class="btn primary-btn">Update Live Website Banner</button>
             </form>
         </div>
-    </div>
 
-    <div id="page-vip" class="page-section">
-        <div class="card" style="max-width: 550px; margin: 0 auto;">
-            <h3>✨ Join Our VIP List</h3>
-            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
-                Want massive promotion drops and seasonal holiday styling discounts sent straight to your inbox? Subscribe below!
-            </p>
-
-            <form onsubmit="handleSubscribe(event)">
-                <label>Email Address</label>
-                <input type="email" id="vip-email" required placeholder="yourname@gmail.com">
-                <button type="submit" class="btn" style="background: var(--dark);">Subscribe for Email Alerts</button>
+        <!-- MODULE 2: MARIA'S TOUCH GALLERY UPLOADER -->
+        <div class="admin-card">
+            <h3>✨ 'Maria's Touch' Portfolio Gallery</h3>
+            <form onsubmit="uploadGalleryImage(event)">
+                <label>Paste Finished Masterpiece Image URL</label>
+                <input type="url" id="gallery-url-input" required placeholder="https://images.unsplash.com/your-photo-link">
+                <button type="submit" class="btn" style="margin-bottom:15px;">Add to Live Gallery</button>
             </form>
-
-            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
-
-            <p style="text-align: center; font-size: 0.85rem; color: #94a3b8;">
-                Official Contact Email:<br>
-                <a href="mailto:mariasbraidsvip@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: bold;">mariasbraidsvip@gmail.com</a>
-            </p>
+            
+            <label>Current Live Gallery Stream (Click 🗑️ to delete)</label>
+            <div class="data-list" id="admin-gallery-list">
+                <p style="text-align:center; padding:20px; color:#94a3b8;">Loading portfolio assets...</p>
+            </div>
         </div>
+
+        <!-- MODULE 3: STYLES CATALOG & PRICE CONFIGURATOR -->
+        <div class="admin-card accent" style="grid-column: 1 / -1;">
+            <h3>✂️ Style Catalog Catalog & Pricing Matrix</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 30px;">
+                
+                <!-- Add Form Frame -->
+                <form onsubmit="addHairstyle(event)">
+                    <label>Hairstyle Name</label>
+                    <input type="text" id="style-name" required placeholder="e.g., Goddess Knotless Braids">
+                    
+                    <label>Style Demo Image URL</label>
+                    <input type="url" id="style-image" required placeholder="Paste lookbook image URL address">
+
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="style-short-only" onchange="toggleAdminLengthInputs(this.checked)">
+                        <label for="style-short-only">This style is "Short Length Only" (Constant Price)</label>
+                    </div>
+
+                    <!-- Variable Length Inputs Workspace -->
+                    <div id="admin-price-matrix-box">
+                        <label>Price for Short Length (K)</label>
+                        <input type="number" id="price-short" required placeholder="e.g., 200">
+                        
+                        <div id="extended-lengths-box">
+                            <label>Price for Medium Length (K)</label>
+                            <input type="number" id="price-medium" required value="0" placeholder="e.g., 250">
+                            
+                            <label>Price for Long Length (K)</label>
+                            <input type="number" id="price-long" required value="0" placeholder="e.g., 300">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn primary-btn">Publish to Customer Catalog</button>
+                </form>
+
+                <!-- Current Catalog List Monitor -->
+                <div>
+                    <label style="font-weight:600; margin-bottom:10px;">Live Style Lookbook Catalog Feed</label>
+                    <div class="data-list" id="admin-catalog-list" style="max-height: 480px;">
+                        <p style="text-align:center; padding:20px; color:#94a3b8;">Loading style definitions...</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MODULE 4: REALTIME BOOKINGS INTELLIGENT FEED -->
+        <div class="admin-card booking-feed">
+            <h3>📋 Customer Booking Pipeline Feed (Max 3 Clients/Day Capacity Check)</h3>
+            <div class="booking-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client Name</th>
+                            <th>Hairstyle Choice</th>
+                            <th>Length Option</th>
+                            <th>Final Price</th>
+                            <th>Reserved Date & Slot</th>
+                            <th>Client Specifications / Questions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-bookings-table">
+                        <tr>
+                            <td colspan="6" style="text-align:center; color:#94a3b8; padding:30px;">Waiting for real-time customer data stream transmissions...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, set, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
@@ -147,109 +188,152 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Initialize EmailJS with your Public Key
-        emailjs.init("YOUR_PUBLIC_KEY"); 
-
-        // Dynamic Menu Page Selector Routine
-        window.switchPage = function(pageId) {
-            document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active-page'));
-            document.querySelectorAll('nav ul li a').forEach(link => link.classList.remove('active'));
-            
-            document.getElementById(`page-${pageId}`).classList.add('active-page');
-            const targetNav = document.getElementById(`nav-${pageId}`);
-            if(targetNav) targetNav.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        const promoRef = ref(database, 'salon/currentPromo');
-        onValue(promoRef, (snapshot) => {
+        // --- MODULE 1 HANDLERS: HERO MANAGED COVER ---
+        onValue(ref(database, 'salon/heroConfig'), (snapshot) => {
             const data = snapshot.val();
-            if (data) {
-                document.getElementById('live-promo-display').innerText = data;
-            } else {
-                document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting promotions.";
+            if(data) {
+                document.getElementById('hero-headline-input').value = data.headline || '';
+                document.getElementById('hero-subtext-input').value = data.subtext || '';
+                document.getElementById('hero-image-input').value = data.imageUrl || '';
             }
         });
 
-        window.toggleEmailField = function(show) {
-            const container = document.getElementById('email-input-container');
-            const emailInput = document.getElementById('customer-email');
-            container.style.display = show ? 'block' : 'none';
-            emailInput.required = show;
+        window.updateHeroBanner = function(e) {
+            e.preventDefault();
+            const headline = document.getElementById('hero-headline-input').value;
+            const subtext = document.getElementById('hero-subtext-input').value;
+            const imageUrl = document.getElementById('hero-image-input').value;
+
+            set(ref(database, 'salon/heroConfig'), { headline, subtext, imageUrl })
+            .then(() => alert("🎉 Live Customer Website Home Banner updated successfully!"))
+            .catch(err => alert("Error syncing configuration setup: " + err.message));
         }
 
-        window.handleBooking = function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('customer-name').value;
-            const style = document.getElementById('customer-style').value;
-            const timeRaw = document.getElementById('customer-time').value;
-            const timeFormatted = timeRaw.replace('T', ' at ');
-            const chosenMethod = document.querySelector('input[name="comm-method"]:checked').value;
-
-            const notificationParams = {
-                to_email: "mariasbraidsvip@gmail.com",
-                customer_name: name,
-                customer_email: chosenMethod === 'email' ? document.getElementById('customer-email').value : "Sent via WhatsApp Option",
-                hairstyle: style,
-                appointment_time: timeFormatted
-            };
-
-            if (chosenMethod === 'whatsapp') {
-                const whatsappNumber = "260961347528"; 
-                const message = `Hello Maria! My name is ${name}. I am using your salon website and I would love to book an appointment for ${style} on ${timeFormatted}. Is this slot open?`;
-                const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-                
-                emailjs.send("service_mgf9voa", "template_l1hp20d", notificationParams)
-                .then(() => console.log("Silent backup booking alert sent to Maria."))
-                .catch((err) => console.log("Backup alert failed: " + JSON.stringify(err)));
-
-                window.open(url, '_blank');
-            } else {
-                const email = document.getElementById('customer-email').value;
-                const bookingsRef = ref(database, 'salon/bookings');
-                
-                push(bookingsRef, {
-                    customerName: name,
-                    customerEmail: email,
-                    hairstyle: style,
-                    appointmentTime: timeFormatted,
-                    timestamp: new Date().toISOString()
-                })
-                .then(() => {
-                    emailjs.send("service_mgf9voa", "template_l1hp20d", notificationParams)
-                    .then(() => console.log("Direct alert pushed to Maria's inbox successfully."))
-                    .catch((err) => console.log("Email dispatch failure log: " + JSON.stringify(err)));
-
-                    alert(`✉️ Booking submitted! Maria will view your request for ${style} and contact you via email shortly.`);
-                    
-                    document.getElementById('customer-name').value = '';
-                    document.getElementById('customer-time').value = '';
-                    document.getElementById('customer-email').value = '';
-                    toggleEmailField(false);
-                    document.querySelector('input[value="whatsapp"]').checked = true;
-                    switchPage('home');
-                })
-                .catch((err) => {
-                    alert("Error submitting booking: " + err.message);
+        // --- MODULE 2 HANDLERS: GALLERY TRACKING ---
+        onValue(ref(database, 'salon/gallery'), (snapshot) => {
+            const container = document.getElementById('admin-gallery-list');
+            container.innerHTML = '';
+            if(snapshot.exists()) {
+                Object.entries(snapshot.val()).forEach(([id, item]) => {
+                    const row = document.createElement('div');
+                    row.className = 'list-item';
+                    row.innerHTML = `
+                        <div class="list-item-info">
+                            <h5>Look Portfolio Asset ID</h5>
+                            <p style="max-width:350px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${item.imageUrl}</p>
+                        </div>
+                        <button class="delete-icon" onclick="deleteGalleryAsset('${id}')">🗑️</button>
+                    `;
+                    container.appendChild(row);
                 });
+            } else {
+                container.innerHTML = '<p style="text-align:center; padding:20px; color:#94a3b8;">No imagery added yet.</p>';
+            }
+        });
+
+        window.uploadGalleryImage = function(e) {
+            e.preventDefault();
+            const imageUrl = document.getElementById('gallery-url-input').value;
+            push(ref(database, 'salon/gallery'), { imageUrl })
+            .then(() => {
+                alert("Look uploaded to gallery stream!");
+                document.getElementById('gallery-url-input').value = '';
+            });
+        }
+
+        window.deleteGalleryAsset = function(id) {
+            if(confirm("Remove this portfolio picture asset from Maria's Touch grid?")) {
+                remove(ref(database, `salon/gallery/${id}`));
             }
         }
 
-        window.handleSubscribe = function(e) {
+        // --- MODULE 3 HANDLERS: LOOKBOOK CATALOG MANAGEMENT ---
+        window.toggleAdminLengthInputs = function(isShortOnly) {
+            const extendedBox = document.getElementById('extended-lengths-box');
+            if(isShortOnly) {
+                extendedBox.style.display = 'none';
+                document.getElementById('price-medium').required = false;
+                document.getElementById('price-long').required = false;
+            } else {
+                extendedBox.style.display = 'block';
+                document.getElementById('price-medium').required = true;
+                document.getElementById('price-long').required = true;
+            }
+        }
+
+        window.addHairstyle = function(e) {
             e.preventDefault();
-            const vipEmail = document.getElementById('vip-email').value;
+            const name = document.getElementById('style-name').value;
+            const imageUrl = document.getElementById('style-image').value;
+            const isShortOnly = document.getElementById('style-short-only').checked;
             
-            // Push subscriber payload structure to database pipeline tracking
-            push(ref(database, 'salon/subscribers'), {
-                email: vipEmail,
-                dateSubscribed: new Date().toISOString()
+            const priceShort = document.getElementById('price-short').value;
+            const priceMedium = isShortOnly ? "0" : document.getElementById('price-medium').value;
+            const priceLong = isShortOnly ? "0" : document.getElementById('price-long').value;
+
+            push(ref(database, 'salon/styles'), {
+                name, imageUrl, isShortOnly, priceShort, priceMedium, priceLong
             }).then(() => {
-                alert("✨ Thank you for subscribing to Maria's VIP alert network!");
+                alert(`Lookbook updated: ${name} added live!`);
                 e.target.reset();
-                switchPage('home');
+                toggleAdminLengthInputs(false);
             });
         }
+
+        onValue(ref(database, 'salon/styles'), (snapshot) => {
+            const container = document.getElementById('admin-catalog-list');
+            container.innerHTML = '';
+            if(snapshot.exists()) {
+                Object.entries(snapshot.val()).forEach(([id, item]) => {
+                    const row = document.createElement('div');
+                    row.className = 'list-item';
+                    let labelText = `K${item.priceShort} (Constant Short)`;
+                    if(!item.isShortOnly) {
+                        labelText = `S: K${item.priceShort} | M: K${item.priceMedium} | L: K${item.priceLong}`;
+                    }
+                    row.innerHTML = `
+                        <div class="list-item-info">
+                            <h5>${item.name}</h5>
+                            <p>${labelText}</p>
+                        </div>
+                        <button class="delete-icon" onclick="deleteCatalogStyle('${id}')">🗑️</button>
+                    `;
+                    container.appendChild(row);
+                });
+            } else {
+                container.innerHTML = '<p style="text-align:center; padding:20px; color:#94a3b8;">Lookbook catalog empty.</p>';
+            }
+        });
+
+        window.deleteCatalogStyle = function(id) {
+            if(confirm("Completely remove this style profile and its pricing matrix?")) {
+                remove(ref(database, `salon/styles/${id}`));
+            }
+        }
+
+        // --- MODULE 4 HANDLERS: DATA FEED RESERVATIONS PIPELINE ---
+        onValue(ref(database, 'salon/bookings'), (snapshot) => {
+            const tbody = document.getElementById('admin-bookings-table');
+            tbody.innerHTML = '';
+            if(snapshot.exists()) {
+                // Sort bookings descending so newest showing up first
+                const dataArray = Object.entries(snapshot.val()).reverse();
+                dataArray.forEach(([id, b]) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${b.customerName}</strong><br><small style="color:#64748b">${b.customerEmail}</small></td>
+                        <td>${b.hairstyle}</td>
+                        <td>${b.styleLength || 'Short Variation'}</td>
+                        <td style="color:var(--primary); font-weight:600">${b.finalPrice || b.hairstylePrice || 'K0.00'}</td>
+                        <td>📅 <code>${b.appointmentDate || b.appointmentTime}</code><br><small style="background:#e2e8f0; padding:2px 4px; border-radius:4px; font-weight:500;">⏱️ Slot: ${b.appointmentSlot || 'Legacy Mode'}</small></td>
+                        <td><div class="specs-cell">${b.userSpecifications || 'No custom requirements specified.'}</div></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:#94a3b8; padding:30px;">No custom bookings booked in records database table yet.</td></tr>';
+            }
+        });
     </script>
 </body>
 </html>
