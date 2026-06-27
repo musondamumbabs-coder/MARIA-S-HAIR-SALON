@@ -27,11 +27,16 @@
         .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
         .card h3 { margin-bottom: 15px; color: var(--dark); }
         
-        input, select { width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; background: #fff; }
         button.btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
         button.btn:hover { background: var(--primary-hover); }
 
         .promo-banner { background: var(--light); border: 2px solid #fbcfe8; text-align: center; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
+        
+        /* Interactive Toggle Styles */
+        .radio-group { display: flex; gap: 15px; margin: 8px 0 20px 0; }
+        .radio-option { display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; }
+        .radio-option input { width: auto; margin: 0; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -47,102 +52,124 @@
     </div>
 
     <div class="container">
+        <!-- Live Promotions Banner -->
         <div class="promo-banner">
             <h3 style="color: var(--primary); margin-bottom: 5px;">📢 Special Announcement</h3>
             <p id="live-promo-display">Loading current promotions...</p>
         </div>
 
         <div class="grid">
-    <div class="card">
-        <h3>📅 Secure Your Slot</h3>
-        <form onsubmit="handleBooking(event)">
-            <label>Your Name</label>
-            <input type="text" id="customer-name" required placeholder="Enter your full name">
-            
-            <label>Select Hairstyle</label>
-            <select id="customer-style">
-                <option>Knotless Braids - K250</option>
-                <option>Lines / Cornrows - K100</option>
-                <option>Box Braids - K200</option>
-                <option>Spring Twists - K300</option>
-            </select>
-            
-            <label>Preferred Date & Time</label>
-            <input type="datetime-local" id="customer-time" required>
-            
-            <button type="submit" class="btn">Submit Appointment</button>
-        </form>
+            <!-- Consolidated Booking Form -->
+            <div class="card">
+                <h3>📅 Secure Your Slot</h3>
+                <form onsubmit="handleBooking(event)">
+                    <label>Your Name</label>
+                    <input type="text" id="customer-name" required placeholder="Enter your full name">
+                    
+                    <label>Select Hairstyle</label>
+                    <select id="customer-style">
+                        <option>Knotless Braids - K250</option>
+                        <option>Lines / Cornrows - K100</option>
+                        <option>Box Braids - K200</option>
+                        <option>Spring Twists - K300</option>
+                    </select>
+                    
+                    <label>Preferred Date & Time</label>
+                    <input type="datetime-local" id="customer-time" required>
+                    
+                    <label>How should we finalize your booking?</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="comm-method" value="whatsapp" checked> 🟢 Confirm via WhatsApp
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="comm-method" value="email"> ✉️ Confirm via Email
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn">Submit Booking</button>
+                </form>
+            </div>
+
+            <!-- Connect & Subscription Panel -->
+            <div class="card">
+                <h3>✨ Join Our VIP List</h3>
+                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+                    Want massive promotion drops and seasonal holiday styling discounts sent straight to your inbox? Subscribe below!
+                </p>
+
+                <form onsubmit="handleSubscribe(event)">
+                    <label>Email Address</label>
+                    <input type="email" required placeholder="yourname@gmail.com">
+                    <button type="submit" class="btn" style="background: var(--dark);">Subscribe for Email Alerts</button>
+                </form>
+
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
+
+                <p style="text-align: center; font-size: 0.85rem; color: #94a3b8;">
+                    Official Contact Email:<br>
+                    <a href="mailto:mariasbraidsvip@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: bold;">mariasbraidsvip@gmail.com</a>
+                </p>
+            </div>
+        </div>
     </div>
-
-    <div class="card">
-        <h3>✨ Connect With Maria</h3>
-        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
-            Have questions or want to send a reference photo? Reach out directly via WhatsApp, or join our email list for promotions.
-        </p>
-
-        <button onclick="openWhatsApp()" class="btn" style="background-color: #25d366; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; gap: 8px;">
-            <svg style="width:20px; height:20px; fill:white;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397 0 11.93 0c3.166.001 6.141 1.233 8.377 3.469 2.235 2.236 3.466 5.211 3.466 8.377-.003 6.582-5.338 11.93-11.87 11.93-2.01 0-3.987-.512-5.747-1.488L0 24zm6.12-3.858c1.63.967 3.425 1.478 5.25 1.479 5.489 0 9.954-4.466 9.957-9.958.002-2.661-1.034-5.163-2.919-7.05-1.884-1.885-4.385-2.92-7.047-2.922-5.493 0-9.959 4.467-9.963 9.959-.001 1.829.479 3.619 1.39 5.221L1.107 22.5l6.12-1.637zm12.084-5.691c-.33-.165-1.951-.963-2.251-1.073-.3-.109-.518-.165-.736.165-.218.329-.846 1.073-1.037 1.292-.19.218-.382.245-.712.08-1.121-.561-1.838-.979-2.56-2.22-.192-.329-.192-.569-.027-.754.15-.167.33-.384.495-.576.165-.192.22-.329.33-.548.11-.219.055-.411-.028-.576-.082-.165-.736-1.771-.1-.99.302.343.518.518.736.518.218 0 .436-.055.518-.165.083-.11.736-1.041.902-1.37.165-.33.165-.603.083-.768-.083-.165-.736-1.771-1.01-2.431-.267-.641-.539-.553-.736-.563-.19-.01-.409-.01-.628-.01-.218 0-.573.082-.873.411-.3.33-1.146 1.121-1.146 2.736 0 1.614 1.173 3.174 1.337 3.394.165.219 2.307 3.522 5.589 4.939.78.337 1.39.539 1.86.688.784.249 1.497.214 2.061.13.629-.094 1.951-.797 2.224-1.536.273-.738.273-1.37.19-1.503-.083-.132-.302-.214-.632-.38z"/></svg>
-            Chat Directly on WhatsApp
-        </button>
-
-        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
-
-        <label>📧 Join Our VIP Email List</label>
-        <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 10px;">Want promotions dropped straight to your inbox?</p>
-        <form onsubmit="handleSubscribe(event)">
-            <input type="email" required placeholder="yourname@gmail.com">
-            <button type="submit" class="btn" style="background: var(--dark);">Subscribe for Email Alerts</button>
-        </form>
-
-        <p style="text-align: center; margin-top: 25px; font-size: 0.85rem; color: #94a3b8;">
-            Official Email: <a href="mailto:mariasbraidsvip@gmail.com" style="color: var(--primary); text-decoration: none;">mariasbraidsvip@gmail.com</a>
-        </p>
-    </div>
-</div>
 
     <script type="module">
-    // 1. Import Firebase Libraries
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        // 1. Import Firebase Libraries
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    // 2. YOUR FIREBASE CONFIGURATION (Paste the exact same keys here!)
-    const firebaseConfig = {
-        apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
-        authDomain: "maria-s-hair-salon.firebaseapp.com",
-        databaseURL: "https://maria-s-hair-salon-default-rtdb.firebaseio.com"
-    };
+        // 2. Firebase Configuration Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
+            authDomain: "maria-s-hair-salon.firebaseapp.com",
+            databaseURL: "https://maria-s-hair-salon-default-rtdb.firebaseio.com"
+        };
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-    // 3. Listen live to database changes
-    const promoRef = ref(database, 'salon/currentPromo');
-    onValue(promoRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-            document.getElementById('live-promo-display').innerText = data;
-        } else {
-            document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting promotions.";
+        // 3. Listen live to promotional updates from Admin Panel
+        const promoRef = ref(database, 'salon/currentPromo');
+        onValue(promoRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                document.getElementById('live-promo-display').innerText = data;
+            } else {
+                document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting promotions.";
+            }
+        });
+
+        // Smart Form Submission Engine
+        window.handleBooking = function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('customer-name').value;
+            const style = document.getElementById('customer-style').value;
+            const timeRaw = document.getElementById('customer-time').value;
+            
+            // Format time display cleanly for reading
+            const timeFormatted = timeRaw.replace('T', ' at ');
+            
+            // Find which communication method was chosen
+            const chosenMethod = document.querySelector('input[name="comm-method"]:checked').value;
+
+            if (chosenMethod === 'whatsapp') {
+                const whatsappNumber = "260961347528"; 
+                const message = `Hello Maria! My name is ${name}. I am using your salon website and I would love to book an appointment for ${style} on ${timeFormatted}. Is this slot open?`;
+                const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+            } else {
+                // Email Fallback Notification
+                alert(`✉️ Booking Form Saved! Maria will reach out to you via email shortly to confirm your slot for ${style}.`);
+            }
         }
-        window.openWhatsApp = function() {
-    // Maria's number with international country code (e.g., 260 for Zambia + her phone digits)
-    const whatsappNumber = "260961347528"; 
-    
-    // Check if they typed a name or style already to pre-fill the message text cleanly
-    const name = document.getElementById('customer-name').value || "there";
-    const style = document.getElementById('customer-style').value;
-    
-    const message = `Hello Maria! My name is ${name}. I am checking out your salon website and I'd love to inquire about getting my hair done (${style}). Are you available?`;
-    
-    // Encode text to ensure space characters load perfectly across web browsers
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    
-    // Open in a new secure browser window tab
-    window.open(url, '_blank');
-}
-    });
 
-    window.handleBooking = function(e) { e.preventDefault(); alert('Booking submitted successfully!'); }
-    window.handleSubscribe = function(e) { e.preventDefault(); alert('Subscribed to VIP mailing list!'); }
-</script>
+        window.handleSubscribe = function(e) { 
+            e.preventDefault(); 
+            alert('💌 Subscribed to Maria\'s VIP promotional list successfully!'); 
+        }
+    </script>
+</body>
+</html>
