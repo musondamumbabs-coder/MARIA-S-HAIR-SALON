@@ -38,6 +38,7 @@
         .radio-option { display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; }
         .radio-option input { width: auto; margin: 0; cursor: pointer; }
     </style>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -52,14 +53,12 @@
     </div>
 
     <div class="container">
-        <!-- Live Promotions Banner -->
         <div class="promo-banner">
             <h3 style="color: var(--primary); margin-bottom: 5px;">📢 Special Announcement</h3>
             <p id="live-promo-display">Loading current promotions...</p>
         </div>
 
         <div class="grid">
-            <!-- Booking Form Card -->
             <div class="card">
                 <h3>📅 Secure Your Slot</h3>
                 <form onsubmit="handleBooking(event)">
@@ -87,7 +86,6 @@
                         </label>
                     </div>
 
-                    <!-- Hidden by default, slides open via script when email radio is toggled -->
                     <div id="email-input-container" style="display: none;">
                         <label>Your Email Address</label>
                         <input type="email" id="customer-email" placeholder="yourname@gmail.com">
@@ -97,7 +95,6 @@
                 </form>
             </div>
 
-            <!-- Connect & Subscription Panel -->
             <div class="card">
                 <h3>✨ Join Our VIP List</h3>
                 <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
@@ -121,22 +118,21 @@
     </div>
 
     <script type="module">
-        // 1. Import Firebase Core and Database Modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // 2. Firebase Project Cluster Credentials
         const firebaseConfig = {
             apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
             authDomain: "maria-s-hair-salon.firebaseapp.com",
             databaseURL: "https://maria-s-hair-salon-default-rtdb.firebaseio.com"
         };
 
-        // Initialize Firebase Connection Nodes
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // 3. Listen live to promotional updates from Admin Panel Banner Node
+        // Initialize EmailJS with your Public Key
+        emailjs.init("YOUR_PUBLIC_KEY"); 
+
         const promoRef = ref(database, 'salon/currentPromo');
         onValue(promoRef, (snapshot) => {
             const data = snapshot.val();
@@ -147,7 +143,6 @@
             }
         });
 
-        // Toggle visibility and validation requirements of the customer email text input
         window.toggleEmailField = function(show) {
             const container = document.getElementById('email-input-container');
             const emailInput = document.getElementById('customer-email');
@@ -155,7 +150,6 @@
             emailInput.required = show;
         }
 
-        // Unified Smart Form Submission Engine
         window.handleBooking = function(e) {
             e.preventDefault();
             
@@ -174,7 +168,7 @@
                 const email = document.getElementById('customer-email').value;
                 const bookingsRef = ref(database, 'salon/bookings');
                 
-                // Write clean, deep reference tracking maps with customer email captured
+                // 1. Log to Firebase Database
                 push(bookingsRef, {
                     customerName: name,
                     customerEmail: email,
@@ -183,9 +177,27 @@
                     timestamp: new Date().toISOString()
                 })
                 .then(() => {
+                    // 2. Dispatch a background notification email directly to Maria via EmailJS
+                    const notificationParams = {
+                        to_email: "mariasbraidsvip@gmail.com",
+                        customer_name: name,
+                        customer_email: email,
+                        hairstyle: style,
+                        appointment_time: timeFormatted
+                    };
+
+                    // Uses the same service ID; make sure to create a "New Booking Alert" template in EmailJS dashboard
+                    emailjs.send("service_fxq467c", "YOUR_BOOKING_TEMPLATE_ID", notificationParams)
+                    .then(() => {
+                        console.log("Direct alert pushed to Maria's inbox successfully.");
+                    })
+                    .catch((err) => {
+                        console.log("Email dispatch failure log: " + JSON.stringify(err));
+                    });
+
                     alert(`✉️ Booking submitted! Maria will view your request for ${style} and contact you via email shortly.`);
                     
-                    // Reset Form Inputs
+                    // Reset fields clean
                     document.getElementById('customer-name').value = '';
                     document.getElementById('customer-time').value = '';
                     document.getElementById('customer-email').value = '';
@@ -198,7 +210,6 @@
             }
         }
 
-        // Dummy Subscription handler placeholder
         window.handleSubscribe = function(e) {
             e.preventDefault();
             alert("✨ Thank you for subscribing to Maria's VIP alert network!");
