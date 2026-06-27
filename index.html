@@ -3,40 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maria's Hair Saloon | Book Your Style</title>
+    <title>Maria's Hair Saloon | Flawless Protective Styling</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #db2777;
             --primary-hover: #be185d;
             --dark: #1e1b4b;
             --light: #fdf2f8;
+            --cream: #fafaf9;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-        body { background-color: #fafaf9; color: #334155; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: #334155; line-height: 1.6; }
         
-        nav { background: var(--dark); color: white; padding: 20px; text-align: center; }
-        nav h1 { font-size: 1.8rem; color: #fbcfe8; }
-        nav p { font-size: 0.9rem; color: #94a3b8; margin-top: 5px; }
+        /* Typography Spicing */
+        h1, h2, h3, .salon-title { font-family: 'Playfair Display', serif; font-weight: 700; }
 
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; height: 300px; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
-        .hero h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        nav { background: var(--dark); color: white; padding: 30px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        nav h1 { font-size: 2.3rem; color: #fbcfe8; letter-spacing: 0.5px; }
+        nav p { font-size: 1rem; color: #cbd5e1; margin-top: 8px; font-style: italic; }
+
+        /* Dynamic Banner Hero managed by Admin */
+        .hero { 
+            background: linear-gradient(rgba(30, 27, 75, 0.75), rgba(30, 27, 75, 0.85)), var(--hero-bg, url('https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1200&q=80')); 
+            background-size: cover; 
+            background-position: center; 
+            min-height: 320px; 
+            color: white; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+            padding: 40px 20px; 
+            transition: background 0.5s ease-in-out;
+        }
+        .hero h2 { font-size: 2.8rem; margin-bottom: 12px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .hero p { max-width: 600px; font-size: 1.1rem; color: #f1f5f9; }
         
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 20px; }
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
         
-        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border-top: 4px solid var(--primary); }
-        .card h3 { margin-bottom: 15px; color: var(--dark); }
+        .section-header { text-align: center; margin-bottom: 35px; }
+        .section-header h2 { font-size: 2.2rem; color: var(--dark); position: relative; display: inline-block; padding-bottom: 10px; }
+        .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 25%; width: 50%; height: 3px; background: var(--primary); border-radius: 2px; }
+
+        /* Catalog & Gallery Grids */
+        .catalog-grid, .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 60px; }
         
-        input, select { width: 100%; padding: 12px; margin: 8px 0 20px 0; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; background: #fff; }
-        button.btn { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; }
+        .style-card { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; display: flex; flex-direction: column; transition: transform 0.2s; }
+        .style-card:hover { transform: translateY(-4px); }
+        .style-img-wrapper { width: 100%; height: 240px; background: #e2e8f0; position: relative; }
+        .style-card img { width: 100%; height: 100%; object-fit: cover; }
+        .style-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .style-info h4 { font-size: 1.3rem; color: var(--dark); margin-bottom: 8px; font-family: 'Playfair Display', serif; }
+        .price-tag { font-weight: 600; color: var(--primary); font-size: 1.1rem; margin-bottom: 15px; }
+        
+        /* Maria's Touch Gallery Style */
+        .gallery-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.03); height: 320px; border: 4px solid white; transition: transform 0.2s; }
+        .gallery-card:hover { transform: scale(1.02); }
+        .gallery-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Booking Grid Workspace */
+        .booking-workspace { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; margin-top: 40px; }
+        @media(max-width: 768px) { .booking-workspace { grid-template-columns: 1fr; } }
+
+        .card { background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); border-top: 5px solid var(--primary); height: fit-content; }
+        .card h3 { margin-bottom: 20px; color: var(--dark); font-size: 1.5rem; }
+        
+        label { display: block; font-weight: 500; margin-bottom: 6px; color: var(--dark); font-size: 0.95rem; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; background: #fff; font-family: inherit; }
+        textarea { resize: vertical; min-height: 80px; }
+        select:disabled { background: #f1f5f9; color: #94a3b8; cursor: not-allowed; }
+        
+        button.btn { background: var(--primary); color: white; border: none; padding: 14px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; width: 100%; font-size: 1rem; transition: background 0.2s; }
         button.btn:hover { background: var(--primary-hover); }
 
-        .promo-banner { background: var(--light); border: 2px solid #fbcfe8; text-align: center; padding: 20px; border-radius: 12px; margin-bottom: 30px; }
-        
-        /* Interactive Toggle Styles */
-        .radio-group { display: flex; gap: 15px; margin: 8px 0 20px 0; }
+        .radio-group { display: flex; gap: 20px; margin-bottom: 20px; }
         .radio-option { display: flex; align-items: center; gap: 8px; font-weight: 500; cursor: pointer; }
-        .radio-option input { width: auto; margin: 0; cursor: pointer; }
+        .radio-option input { width: auto; margin: 0; }
+
+        /* Info Panel Design */
+        .info-panel { background: var(--dark); color: white; border-top: none; display: flex; flex-direction: column; justify-content: space-between; }
+        .info-panel h3 { color: #fbcfe8; }
+        .address-box { background: rgba(255,255,255,0.05); border-left: 3px solid var(--primary); padding: 15px; border-radius: 6px; margin: 20px 0; }
+        .address-box p { font-size: 0.95rem; color: #e2e8f0; }
+
+        .length-container { display: flex; flex-direction: column; gap: 4px; margin-bottom: 25px; padding: 12px; background: var(--cream); border-radius: 8px; border: 1px dashed #cbd5e1; }
     </style>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
@@ -44,45 +99,75 @@
 
     <nav>
         <h1>💇‍♀️ Maria's Hair Saloon</h1>
-        <p>Your home for beautiful, clean, and neat protective hairstyles.</p>
+        <p>Neat, crisp, and flawless protective hairstyles styled with love.</p>
     </nav>
 
-    <div class="hero">
-        <h2>Flawless Plaits, Every Time</h2>
-        <p>Book your knotless braids, lines, twists, and protective styles today.</p>
+    <div class="hero" id="dynamic-hero-banner">
+        <h2 id="hero-headline">Welcome to Flawless Braiding</h2>
+        <p id="hero-subtext">Book your preferred protective styling appointment slot ahead of time below.</p>
     </div>
 
     <div class="container">
-        <div class="promo-banner">
-            <h3 style="color: var(--primary); margin-bottom: 5px;">📢 Special Announcement</h3>
-            <p id="live-promo-display">Loading current promotions...</p>
+        
+        <div class="section-header">
+            <h2>Our Hair Styles Catalog</h2>
+        </div>
+        <div class="catalog-grid" id="catalog-container">
+            <p style="text-align: center; grid-column: 1/-1; color: #94a3b8;">Loading latest lookbook catalog...</p>
         </div>
 
-        <div class="grid">
+        <div class="section-header">
+            <h2>Maria's Touch</h2>
+        </div>
+        <div class="gallery-grid" id="gallery-container">
+            <p style="text-align: center; grid-column: 1/-1; color: #94a3b8;">Loading style gallery uploads...</p>
+        </div>
+
+        <div class="section-header" id="booking-anchor">
+            <h2>Secure Your Private Session</h2>
+        </div>
+
+        <div class="booking-workspace">
             <div class="card">
-                <h3>📅 Secure Your Slot</h3>
+                <h3>📅 Appointment Customization</h3>
                 <form onsubmit="handleBooking(event)">
-                    <label>Your Name</label>
-                    <input type="text" id="customer-name" required placeholder="Enter your full name">
+                    <label>Your Full Name</label>
+                    <input type="text" id="customer-name" required placeholder="Enter your first and last name">
                     
-                    <label>Select Hairstyle</label>
-                    <select id="customer-style">
-                        <option>Knotless Braids - K250</option>
-                        <option>Lines / Cornrows - K100</option>
-                        <option>Box Braids - K200</option>
-                        <option>Spring Twists - K300</option>
+                    <label>Selected Hairstyle</label>
+                    <select id="customer-style" onchange="handleStyleSelectionChange()" required>
+                        <option value="">-- Choose from Catalog Above or Select Here --</option>
+                    </select>
+
+                    <div id="length-selection-box" style="display:none;">
+                        <label>Preferred Length Selection</label>
+                        <select id="customer-length" onchange="updateDynamicCalculatedPrice()">
+                            </select>
+                    </div>
+
+                    <div class="length-container">
+                        <span style="font-weight:600; font-size:0.9rem; color: var(--dark);">💰 Live Calculated Price:</span>
+                        <span id="live-price-counter" style="font-size:1.3rem; font-weight:700; color:var(--primary);">K0.00</span>
+                    </div>
+                    
+                    <label>Preferred Appointment Date</label>
+                    <input type="date" id="booking-date" required onchange="checkAvailableSlots()">
+                    
+                    <label>Available 4-Hour Time Slots</label>
+                    <select id="booking-slot" required disabled>
+                        <option value="">-- First, Choose a Valid Upcoming Date --</option>
                     </select>
                     
-                    <label>Preferred Date & Time</label>
-                    <input type="datetime-local" id="customer-time" required>
-                    
-                    <label>How should we finalize your booking?</label>
+                    <label>Personal Specifications / Questions for Maria (Optional)</label>
+                    <textarea id="customer-specs" placeholder="Add details about your preferred color extensions, parting sizes, hair density texture, or any questions you have..."></textarea>
+
+                    <label>How should we finalize your confirmation?</label>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="comm-method" value="whatsapp" checked onclick="toggleEmailField(false)"> 🟢 Confirm via WhatsApp
+                            <input type="radio" name="comm-method" value="whatsapp" checked onclick="toggleEmailField(false)"> 🟢 Via WhatsApp
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="comm-method" value="email" onclick="toggleEmailField(true)"> ✉️ Confirm via Email
+                            <input type="radio" name="comm-method" value="email" onclick="toggleEmailField(true)"> ✉️ Via Email
                         </label>
                     </div>
 
@@ -91,35 +176,39 @@
                         <input type="email" id="customer-email" placeholder="yourname@gmail.com">
                     </div>
                     
-                    <button type="submit" class="btn">Submit Booking</button>
+                    <button type="submit" class="btn">Confirm Appointment Reservation</button>
                 </form>
             </div>
 
-            <div class="card">
-                <h3>✨ Join Our VIP List</h3>
-                <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
-                    Want massive promotion drops and seasonal holiday styling discounts sent straight to your inbox? Subscribe below!
-                </p>
+            <div class="card info-panel">
+                <div>
+                    <h3>✨ Salon Location & Welcome</h3>
+                    <p style="margin-top:15px; color:#cbd5e1; font-size:0.95rem;">
+                        Welcome to Maria's Hair Saloon! We pride ourselves on creating beautiful, exceptionally neat protective styling layouts. To ensure you receive our premium, unhurried, VIP execution quality, we strictly limit styling capacity to a maximum of **3 clients per day**. 
+                    </p>
+                    
+                    <div class="address-box">
+                        <p style="font-weight: 600; color: #fbcfe8; margin-bottom: 4px; font-family:'Playfair Display', serif;">📍 Our Studio Location Address:</p>
+                        <p>1611vlc Pamodi, Ndola</p>
+                        <p style="font-size: 0.85rem; margin-top: 5px; color: #94a3b8; font-style: italic;">
+                            Landmark: Oasis of Love, just directly opposite.
+                        </p>
+                    </div>
+                </div>
 
-                <form onsubmit="handleSubscribe(event)">
-                    <label>Email Address</label>
-                    <input type="email" required placeholder="yourname@gmail.com">
-                    <button type="submit" class="btn" style="background: var(--dark);">Subscribe for Email Alerts</button>
-                </form>
-
-                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 25px 0;">
-
-                <p style="text-align: center; font-size: 0.85rem; color: #94a3b8;">
-                    Official Contact Email:<br>
-                    <a href="mailto:mariasbraidsvip@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: bold;">mariasbraidsvip@gmail.com</a>
-                </p>
+                <div style="border-top:1px solid rgba(255,255,255,0.1); padding-top:20px; margin-top:20px;">
+                    <p style="font-size:0.85rem; color:#a1a1aa; text-align:center;">
+                        Direct Queries: <a href="mailto:mariasbraidsvip@gmail.com" style="color:var(--primary); text-decoration:none; font-weight:600;">mariasbraidsvip@gmail.com</a>
+                    </p>
+                </div>
             </div>
         </div>
+
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
@@ -130,96 +219,236 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // Initialize EmailJS with your Public Key
-        emailjs.init("QVH_ZboyoAdO1F_Xk"); 
+        // Put your real Account Public Key string here from EmailJS dashboard settings
+        emailjs.init("YOUR_PUBLIC_KEY"); 
 
-        const promoRef = ref(database, 'salon/currentPromo');
-        onValue(promoRef, (snapshot) => {
+        let stylesCatalogData = {};
+
+        // ENFORCED CONDITION 1: Bookings must be made at least a day before
+        const dateInput = document.getElementById('booking-date');
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.min = tomorrow.toISOString().split('T')[0];
+
+        // Core Realtime Sync Listeners
+        // 1. Dynamic Hero configuration controls
+        onValue(ref(database, 'salon/heroConfig'), (snapshot) => {
             const data = snapshot.val();
-            if (data) {
-                document.getElementById('live-promo-display').innerText = data;
-            } else {
-                document.getElementById('live-promo-display').innerText = "Welcome to Maria's Hair Saloon! Check back soon for exciting promotions.";
+            if(data) {
+                if(data.headline) document.getElementById('hero-headline').innerText = data.headline;
+                if(data.subtext) document.getElementById('hero-subtext').innerText = data.subtext;
+                if(data.imageUrl) document.getElementById('dynamic-hero-banner').style.setProperty('--hero-bg', `url('${data.imageUrl}')`);
             }
         });
 
-        window.toggleEmailField = function(show) {
-            const container = document.getElementById('email-input-container');
-            const emailInput = document.getElementById('customer-email');
-            container.style.display = show ? 'block' : 'none';
-            emailInput.required = show;
+        // 2. Load Styles Catalog
+        onValue(ref(database, 'salon/styles'), (snapshot) => {
+            const container = document.getElementById('catalog-container');
+            const selectDropdown = document.getElementById('customer-style');
+            container.innerHTML = '';
+            
+            // Clear current selection items except first placeholder
+            selectDropdown.innerHTML = '<option value="">-- Choose from Catalog Above or Select Here --</option>';
+            
+            if (snapshot.exists()) {
+                stylesCatalogData = snapshot.val();
+                Object.entries(stylesCatalogData).forEach(([id, item]) => {
+                    // Inject into catalog cards view UI
+                    const card = document.createElement('div');
+                    card.className = 'style-card';
+                    
+                    let displayPrice = `K${item.priceShort}`;
+                    if(!item.isShortOnly) {
+                        displayPrice = `K${item.priceShort} - K${item.priceLong}`;
+                    }
+
+                    card.innerHTML = `
+                        <div class="style-img-wrapper"><img src="${item.imageUrl || 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=400&q=80'}" alt="${item.name}"></div>
+                        <div class="style-info">
+                            <h4>${item.name}</h4>
+                            <p class="price-tag">${displayPrice}</p>
+                            <button type="button" class="btn" style="margin-top:auto; padding:8px 12px; font-size:0.9rem;" onclick="triggerQuickBook('${id}')">Select & Customize Style</button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+
+                    // Dropdown configuration option map
+                    const opt = document.createElement('option');
+                    opt.value = id;
+                    opt.innerText = item.name;
+                    selectDropdown.appendChild(opt);
+                });
+            } else {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #94a3b8;">No styles available in looking glass catalog currently.</p>';
+            }
+        });
+
+        // 3. Load Maria's Touch Gallery
+        onValue(ref(database, 'salon/gallery'), (snapshot) => {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+            if(snapshot.exists()){
+                Object.values(snapshot.val()).forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'gallery-card';
+                    card.innerHTML = `<img src="${item.imageUrl}" alt="Maria's Masterpiece Touch Styling">`;
+                    container.appendChild(card);
+                });
+            } else {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #94a3b8;">Maria\'s portfolio additions will showcase here soon.</p>';
+            }
+        });
+
+        window.triggerQuickBook = function(styleId) {
+            const selectDropdown = document.getElementById('customer-style');
+            selectDropdown.value = styleId;
+            handleStyleSelectionChange();
+            document.getElementById('booking-anchor').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.handleStyleSelectionChange = function() {
+            const styleId = document.getElementById('customer-style').value;
+            const lengthBox = document.getElementById('length-selection-box');
+            const lengthSelect = document.getElementById('customer-length');
+            
+            if(!styleId || !stylesCatalogData[styleId]) {
+                lengthBox.style.display = 'none';
+                document.getElementById('live-price-counter').innerText = 'K0.00';
+                return;
+            }
+
+            const item = stylesCatalogData[styleId];
+            
+            if(item.isShortOnly) {
+                lengthBox.style.display = 'none';
+                lengthSelect.innerHTML = '<option value="short" data-price="'+item.priceShort+'">Short Only</option>';
+            } else {
+                lengthBox.style.display = 'block';
+                lengthSelect.innerHTML = `
+                    <option value="short" data-price="${item.priceShort}">Short Style Variant</option>
+                    <option value="medium" data-price="${item.priceMedium}">Medium Style Variant</option>
+                    <option value="long" data-price="${item.priceLong}">Long Style Variant</option>
+                `;
+            }
+            updateDynamicCalculatedPrice();
+        }
+
+        window.updateDynamicCalculatedPrice = function() {
+            const lengthSelect = document.getElementById('customer-length');
+            if(!lengthSelect.selectedOptions[0]) return;
+            const targetPrice = lengthSelect.selectedOptions[0].getAttribute('data-price');
+            document.getElementById('live-price-counter').innerText = `K${targetPrice}`;
+        }
+
+        window.checkAvailableSlots = function() {
+            const selectedDate = document.getElementById('booking-date').value;
+            const slotDropdown = document.getElementById('booking-slot');
+            if (!selectedDate) return;
+
+            slotDropdown.disabled = true;
+            slotDropdown.innerHTML = '<option value="">Crosschecking slot tables...</option>';
+
+            get(ref(database, 'salon/bookings')).then((snapshot) => {
+                // FIXED 4-HOUR ESTIMATION TIME BLOCKS
+                const standardTimeBlocks = [
+                    { id: "06:00 - 10:00", text: "🌅 Early Morning Session: 06:00 AM - 10:00 AM" },
+                    { id: "10:30 - 14:30", text: "☀️ Afternoon Session: 10:30 AM - 02:30 PM" },
+                    { id: "15:00 - 19:00", text: "🌇 Sunset Wrap Session: 03:00 PM - 07:00 PM" }
+                ];
+
+                let bookedSlots = [];
+                if (snapshot.exists()) {
+                    Object.values(snapshot.val()).forEach(b => {
+                        if (b.appointmentDate === selectedDate) bookedSlots.push(b.appointmentSlot);
+                    });
+                }
+
+                slotDropdown.innerHTML = '';
+                let openOptionsCount = 0;
+
+                standardTimeBlocks.forEach(block => {
+                    const isBooked = bookedSlots.includes(block.id);
+                    const opt = document.createElement('option');
+                    opt.value = block.id;
+                    opt.innerText = isBooked ? `❌ ${block.text} (Fully Reserved)` : block.text;
+                    opt.disabled = isBooked;
+                    slotDropdown.appendChild(opt);
+                    if (!isBooked) openOptionsCount++;
+                });
+
+                if (openOptionsCount === 0) {
+                    slotDropdown.innerHTML = '<option value="">🛑 All 3 slots reserved. Choose another day!</option>';
+                } else {
+                    slotDropdown.disabled = false;
+                }
+            });
         }
 
         window.handleBooking = function(e) {
             e.preventDefault();
             
             const name = document.getElementById('customer-name').value;
-            const style = document.getElementById('customer-style').value;
-            const timeRaw = document.getElementById('customer-time').value;
-            const timeFormatted = timeRaw.replace('T', ' at ');
+            const styleId = document.getElementById('customer-style').value;
+            const styleName = stylesCatalogData[styleId].name;
+            const lengthText = document.getElementById('customer-length').selectedOptions[0].text;
+            const rawPrice = document.getElementById('live-price-counter').innerText;
+            const date = document.getElementById('booking-date').value;
+            const slot = document.getElementById('booking-slot').value;
+            const specs = document.getElementById('customer-specs').value || "None provided";
             const chosenMethod = document.querySelector('input[name="comm-method"]:checked').value;
+            
+            const appointmentDetails = `${styleName} (${lengthText}) priced at ${rawPrice} on ${date} within window slot: ${slot}`;
 
-            // Common parameters for EmailJS payload routing
             const notificationParams = {
                 to_email: "mariasbraidsvip@gmail.com",
                 customer_name: name,
-                customer_email: chosenMethod === 'email' ? document.getElementById('customer-email').value : "Sent via WhatsApp Option",
-                hairstyle: style,
-                appointment_time: timeFormatted
+                customer_email: chosenMethod === 'email' ? document.getElementById('customer-email').value : "WhatsApp Option Redirect",
+                hairstyle: `${styleName} (${lengthText}) - Final Price: ${rawPrice}`,
+                appointment_time: `${date} @ [${slot}]`,
+                // Adding User Specs to EmailJS layout parameters dynamically
+                notes: specs
             };
 
             if (chosenMethod === 'whatsapp') {
                 const whatsappNumber = "260961347528"; 
-                const message = `Hello Maria! My name is ${name}. I am using your salon website and I would love to book an appointment for ${style} on ${timeFormatted}. Is this slot open?`;
-                const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+                const msg = `Hello Maria! My name is ${name}. I am using your website looking glass and booked ${styleName} (${lengthText}) quoted at ${rawPrice} for ${date} during the [${slot}] window. Custom Notes: ${specs}`;
                 
-                // Fire off a silent email notification to Maria first so she has a digital record of it
                 emailjs.send("service_mgf9voa", "template_l1hp20d", notificationParams)
-                .then(() => console.log("Silent backup booking alert sent to Maria."))
-                .catch((err) => console.log("Backup alert failed: " + JSON.stringify(err)));
+                .then(() => console.log("Silent synchronization alert dispatched."))
+                .catch(err => console.log(err));
 
-                window.open(url, '_blank');
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
             } else {
                 const email = document.getElementById('customer-email').value;
-                const bookingsRef = ref(database, 'salon/bookings');
                 
-                // 1. Log to Firebase Database
-                push(bookingsRef, {
+                push(ref(database, 'salon/bookings'), {
                     customerName: name,
                     customerEmail: email,
-                    hairstyle: style,
-                    appointmentTime: timeFormatted,
+                    hairstyle: styleName,
+                    styleLength: lengthText,
+                    finalPrice: rawPrice,
+                    appointmentDate: date,
+                    appointmentSlot: slot,
+                    userSpecifications: specs,
                     timestamp: new Date().toISOString()
                 })
                 .then(() => {
-                    // 2. Dispatch the background notification email directly to Maria via EmailJS
                     emailjs.send("service_mgf9voa", "template_l1hp20d", notificationParams)
-                    .then(() => {
-                        console.log("Direct alert pushed to Maria's inbox successfully.");
-                    })
-                    .catch((err) => {
-                        console.log("Email dispatch failure log: " + JSON.stringify(err));
-                    });
+                    .then(() => console.log("Success alert pipeline synced."))
+                    .catch(err => console.log(err));
 
-                    alert(`✉️ Booking submitted! Maria will view your request for ${style} and contact you via email shortly.`);
-                    
-                    // Reset fields clean
-                    document.getElementById('customer-name').value = '';
-                    document.getElementById('customer-time').value = '';
-                    document.getElementById('customer-email').value = '';
+                    alert(`✉️ Booking completely submitted! Maria will evaluate your custom specifications and notify you shortly.`);
+                    e.target.reset();
+                    document.getElementById('booking-slot').innerHTML = '<option value="">-- First, Choose a Valid Upcoming Date --</option>';
+                    document.getElementById('booking-slot').disabled = true;
                     toggleEmailField(false);
-                    document.querySelector('input[value="whatsapp"]').checked = true;
-                })
-                .catch((err) => {
-                    alert("Error submitting booking: " + err.message);
                 });
             }
         }
 
-        window.handleSubscribe = function(e) {
-            e.preventDefault();
-            alert("✨ Thank you for subscribing to Maria's VIP alert network!");
-            e.target.reset();
+        window.toggleEmailField = function(show) {
+            const container = document.getElementById('email-input-container');
+            if(container) container.style.display = show ? 'block' : 'none';
         }
     </script>
 </body>
