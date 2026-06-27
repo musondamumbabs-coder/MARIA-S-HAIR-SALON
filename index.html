@@ -59,7 +59,7 @@
         </div>
 
         <div class="grid">
-            <!-- Consolidated Booking Form -->
+            <!-- Booking Form Card -->
             <div class="card">
                 <h3>📅 Secure Your Slot</h3>
                 <form onsubmit="handleBooking(event)">
@@ -80,11 +80,17 @@
                     <label>How should we finalize your booking?</label>
                     <div class="radio-group">
                         <label class="radio-option">
-                            <input type="radio" name="comm-method" value="whatsapp" checked> 🟢 Confirm via WhatsApp
+                            <input type="radio" name="comm-method" value="whatsapp" checked onclick="toggleEmailField(false)"> 🟢 Confirm via WhatsApp
                         </label>
                         <label class="radio-option">
-                            <input type="radio" name="comm-method" value="email"> ✉️ Confirm via Email
+                            <input type="radio" name="comm-method" value="email" onclick="toggleEmailField(true)"> ✉️ Confirm via Email
                         </label>
+                    </div>
+
+                    <!-- Hidden by default, slides open via script when email radio is toggled -->
+                    <div id="email-input-container" style="display: none;">
+                        <label>Your Email Address</label>
+                        <input type="email" id="customer-email" placeholder="yourname@gmail.com">
                     </div>
                     
                     <button type="submit" class="btn">Submit Booking</button>
@@ -115,22 +121,22 @@
     </div>
 
     <script type="module">
-        // 1. Import Firebase Libraries
+        // 1. Import Firebase Core and Database Modules
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // 2. Firebase Configuration Configuration
+        // 2. Firebase Project Cluster Credentials
         const firebaseConfig = {
             apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
             authDomain: "maria-s-hair-salon.firebaseapp.com",
             databaseURL: "https://maria-s-hair-salon-default-rtdb.firebaseio.com"
         };
 
-        // Initialize Firebase
+        // Initialize Firebase Connection Nodes
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        // 3. Listen live to promotional updates from Admin Panel
+        // 3. Listen live to promotional updates from Admin Panel Banner Node
         const promoRef = ref(database, 'salon/currentPromo');
         onValue(promoRef, (snapshot) => {
             const data = snapshot.val();
@@ -141,18 +147,22 @@
             }
         });
 
-        // Smart Form Submission Engine
+        // Toggle visibility and validation requirements of the customer email text input
+        window.toggleEmailField = function(show) {
+            const container = document.getElementById('email-input-container');
+            const emailInput = document.getElementById('customer-email');
+            container.style.display = show ? 'block' : 'none';
+            emailInput.required = show;
+        }
+
+        // Unified Smart Form Submission Engine
         window.handleBooking = function(e) {
             e.preventDefault();
             
             const name = document.getElementById('customer-name').value;
             const style = document.getElementById('customer-style').value;
             const timeRaw = document.getElementById('customer-time').value;
-            
-            // Format time display cleanly for reading
             const timeFormatted = timeRaw.replace('T', ' at ');
-            
-            // Find which communication method was chosen
             const chosenMethod = document.querySelector('input[name="comm-method"]:checked').value;
 
             if (chosenMethod === 'whatsapp') {
@@ -161,47 +171,39 @@
                 const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
                 window.open(url, '_blank');
             } else {
-                // Email Fallback Notification
-                alert(`✉️ Booking Form Saved! Maria will reach out to you via email shortly to confirm your slot for ${style}.`);
+                const email = document.getElementById('customer-email').value;
+                const bookingsRef = ref(database, 'salon/bookings');
+                
+                // Write clean, deep reference tracking maps with customer email captured
+                push(bookingsRef, {
+                    customerName: name,
+                    customerEmail: email,
+                    hairstyle: style,
+                    appointmentTime: timeFormatted,
+                    timestamp: new Date().toISOString()
+                })
+                .then(() => {
+                    alert(`✉️ Booking submitted! Maria will view your request for ${style} and contact you via email shortly.`);
+                    
+                    // Reset Form Inputs
+                    document.getElementById('customer-name').value = '';
+                    document.getElementById('customer-time').value = '';
+                    document.getElementById('customer-email').value = '';
+                    toggleEmailField(false);
+                    document.querySelector('input[value="whatsapp"]').checked = true;
+                })
+                .catch((err) => {
+                    alert("Error submitting booking: " + err.message);
+                });
             }
         }
 
-       // Smart Form Submission Engine
-import { push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-window.handleBooking = function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('customer-name').value;
-    const style = document.getElementById('customer-style').value;
-    const timeRaw = document.getElementById('customer-time').value;
-    const timeFormatted = timeRaw.replace('T', ' at ');
-    const chosenMethod = document.querySelector('input[name="comm-method"]:checked').value;
-
-    if (chosenMethod === 'whatsapp') {
-        const whatsappNumber = "260961347528"; 
-        const message = `Hello Maria! My name is ${name}. I am using your salon website and I would love to book an appointment for ${style} on ${timeFormatted}. Is this slot open?`;
-        const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-        window.open(url, '_blank');
-    } else {
-        // Save booking data cleanly to Firebase under 'salon/bookings'
-        const bookingsRef = ref(database, 'salon/bookings');
-        push(bookingsRef, {
-            customerName: name,
-            hairstyle: style,
-            appointmentTime: timeFormatted,
-            timestamp: new Date().toISOString()
-        })
-        .then(() => {
-            alert(`✉️ Booking submitted! Maria will view your request for ${style} and contact you via email shortly.`);
-            document.getElementById('customer-name').value = '';
-            document.getElementById('customer-time').value = '';
-        })
-        .catch((err) => {
-            alert("Error submitting booking: " + err.message);
-        });
-    }
-}
+        // Dummy Subscription handler placeholder
+        window.handleSubscribe = function(e) {
+            e.preventDefault();
+            alert("✨ Thank you for subscribing to Maria's VIP alert network!");
+            e.target.reset();
+        }
     </script>
 </body>
 </html>
