@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria's Salon | Lusaka's Premier Hair Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialise EmailJS with your public key
+        document.addEventListener('DOMContentLoaded', function() {
+            emailjs.init('QVH_ZboyoAdO1F_Xk');
+        });
+    </script>
+
+    <style>
+        :root {
+            --rose:      #db2777;
+            --rose-deep: #be185d;
+            --rose-soft: #fce7f3;
+            --rose-pale: #fdf2f8;
+            --indigo:    #1e1b4b;
+            --indigo-md: #312e81;
+            --slate-50:  #f8fafc;
+            --slate-200: #e2e8f0;
+            --slate-400: #94a3b8;
+            --slate-600: #475569;
+            --slate-800: #1e293b;
+            --white:     #ffffff;
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+            --shadow-md: 0 4px 16px rgba(0,0,0,.08);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,.10);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--slate-800); line-height: 1.6; }
+
+        /* ─── NAVIGATION ─────────────────────────────── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; height: 68px;
+            background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--slate-200);
+            transition: box-shadow .3s;
+        }
+        nav.scrolled { box-shadow: var(--shadow-md); }
+        .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-brand-icon { width: 36px; height: 36px; background: var(--rose); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .nav-brand-text { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--indigo); }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--slate-600); text-decoration: none; transition: color .2s; }
+        .nav-links a:hover { color: var(--rose); }
+        .nav-cta { background: var(--rose); color: white; padding: 10px 22px; border-radius: 50px; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: background .2s, transform .15s; }
+        .nav-cta:hover { background: var(--rose-deep); transform: translateY(-1px); }
+        .nav-mobile-toggle { display: none; background: none; border: none; cursor: pointer; color: var(--indigo); font-size: 1.4rem; }
+        @media(max-width: 768px) {
+            .nav-links, .nav-cta { display: none; }
+            .nav-mobile-toggle { display: block; }
+        }
+
+        /* ─── HERO ───────────────────────────────────── */
+        .hero {
+            margin-top: 68px; min-height: calc(100vh - 68px);
+            display: grid; grid-template-columns: 1fr 1fr;
+            background: var(--indigo);
+            position: relative; overflow: hidden;
+        }
+        @media(max-width: 900px) { .hero { grid-template-columns: 1fr; } }
+
+        .hero-text-panel {
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 80px 5% 80px 8%;
+            position: relative; z-index: 2;
+        }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--rose); background: rgba(219,39,119,.15);
+            padding: 6px 14px; border-radius: 50px; width: fit-content; margin-bottom: 28px;
+        }
+        .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--rose); border-radius: 50%; display: inline-block; animation: blink 2s infinite; }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        .hero h1 {
+            font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 5vw, 3.8rem);
+            color: white; line-height: 1.15; margin-bottom: 20px;
+        }
+        .hero h1 em { font-style: italic; color: #fbcfe8; }
+        .hero-sub { color: #cbd5e1; font-size: 1rem; max-width: 400px; margin-bottom: 40px; line-height: 1.8; }
+        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn-primary { background: var(--rose); color: white; padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border: none; cursor: pointer; transition: background .2s, transform .15s, box-shadow .2s; box-shadow: 0 4px 14px rgba(219,39,119,.4); }
+        .btn-primary:hover { background: var(--rose-deep); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(219,39,119,.5); }
+        .btn-ghost { background: transparent; color: white; padding: 14px 28px; border-radius: 50px; font-weight: 600; font-size: 0.95rem; text-decoration: none; border: 2px solid rgba(255,255,255,.3); cursor: pointer; transition: border-color .2s, background .2s; }
+        .btn-ghost:hover { border-color: white; background: rgba(255,255,255,.08); }
+        .hero-stats { display: flex; gap: 36px; margin-top: 56px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,.1); }
+        .stat-item .stat-num { font-family: 'Playfair Display', serif; font-size: 2rem; color: white; }
+        .stat-item .stat-label { font-size: 0.8rem; color: var(--slate-400); }
+
+        .hero-image-panel { position: relative; overflow: hidden; }
+        @media(max-width:900px) { .hero-image-panel { height: 300px; } }
+        .hero-image-panel img { width: 100%; height: 100%; object-fit: cover; opacity: 0.75; transition: opacity .4s; }
+        .hero-image-panel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--indigo) 0%, transparent 40%); pointer-events: none; }
+        @media(max-width:900px) { .hero-image-panel::after { background: linear-gradient(0deg, var(--indigo) 0%, transparent 60%); } }
+
+        /* ─── SECTION STRUCTURE ──────────────────────── */
+        section { padding: 96px 5%; }
+        .section-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--rose); margin-bottom: 12px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--indigo); line-height: 1.2; }
+        .section-title + p { color: var(--slate-600); margin-top: 14px; max-width: 540px; font-size: 0.975rem; line-height: 1.8; }
+        .section-header { margin-bottom: 52px; }
+        .section-header.centered { text-align: center; }
+        .section-header.centered .section-title + p { margin: 14px auto 0; }
+
+        /* ─── STYLES CATALOG ─────────────────────────── */
+        #styles { background: var(--slate-50); }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .style-card {
+            background: white; border-radius: var(--radius-md); overflow: hidden;
+            box-shadow: var(--shadow-sm); transition: transform .25s, box-shadow .25s;
+            cursor: pointer; border: 1px solid var(--slate-200);
+        }
+        .style-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .style-card-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; background: var(--rose-soft); }
+        .style-card-img-placeholder { width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--rose-soft), #fce7f3); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+        .style-card-body { padding: 18px 20px 20px; }
+        .style-card-name { font-weight: 600; font-size: 0.975rem; color: var(--slate-800); margin-bottom: 10px; }
+        .price-row { display: flex; flex-wrap: wrap; gap: 6px; }
+        .price-chip { background: var(--rose-pale); color: var(--rose-deep); font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 50px; border: 1px solid #fce7f3; }
+        .price-chip.constant { background: var(--slate-50); color: var(--slate-600); border-color: var(--slate-200); }
+        .style-card-action { display: block; width: 100%; margin-top: 14px; background: var(--indigo); color: white; border: none; padding: 10px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: background .2s; }
+        .style-card-action:hover { background: var(--indigo-md); }
+        #styles-empty-state { text-align: center; padding: 60px 20px; color: var(--slate-400); }
+        #styles-empty-state p { margin-top: 10px; font-size: 0.9rem; }
+
+        /* ─── GALLERY ────────────────────────────────── */
+        #gallery { background: white; }
+        .gallery-masonry { columns: 3 260px; gap: 16px; }
+        .gallery-item { break-inside: avoid; margin-bottom: 16px; border-radius: var(--radius-md); overflow: hidden; cursor: pointer; position: relative; }
+        .gallery-item img { width: 100%; display: block; transition: transform .4s; }
+        .gallery-item:hover img { transform: scale(1.04); }
+        .gallery-item-overlay { position: absolute; inset: 0; background: rgba(30,27,75,.5); opacity: 0; transition: opacity .3s; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.6rem; }
+        .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+        #gallery-loading, #gallery-empty { text-align: center; padding: 40px; color: var(--slate-400); }
+
+        /* ─── BOOKING ────────────────────────────────── */
+        #booking { background: var(--indigo); }
+        #booking .section-eyebrow { color: #fbcfe8; }
+        #booking .section-title { color: white; }
+        #booking .section-title + p { color: #cbd5e1; }
+        .booking-wrapper { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
+        @media(max-width: 900px) { .booking-wrapper { grid-template-columns: 1fr; } }
+        .booking-features { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
+        .booking-feature { display: flex; gap: 14px; align-items: flex-start; }
+        .booking-feature-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(219,39,119,.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+        .booking-feature-text h4 { color: white; font-size: 0.9rem; font-weight: 600; }
+        .booking-feature-text p { color: #94a3b8; font-size: 0.8rem; margin-top: 2px; }
+
+        .booking-form-card { background: white; border-radius: var(--radius-lg); padding: 36px; box-shadow: var(--shadow-lg); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--slate-600); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-control { width: 100%; padding: 11px 14px; border: 1.5px solid var(--slate-200); border-radius: var(--radius-sm); font-family: 'Inter', sans-serif; font-size: 0.925rem; color: var(--slate-800); background: var(--slate-50); transition: border-color .2s, box-shadow .2s; }
+        .form-control:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 3px rgba(219,39,119,.12); background: white; }
+        .form-control::placeholder { color: var(--slate-400); }
+        select.form-control { cursor: pointer; }
+        textarea.form-control { resize: vertical; min-height: 90px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        @media(max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+        .length-selector { display: none; }
+        .length-selector.visible { display: block; }
+        .slots-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 4px; }
+        .slot-btn { background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: var(--radius-sm); padding: 9px 4px; font-size: 0.8rem; font-weight: 600; color: var(--slate-600); cursor: pointer; transition: all .2s; text-align: center; }
+        .slot-btn:hover:not(.disabled) { border-color: var(--rose); color: var(--rose); }
+        .slot-btn.selected { background: var(--rose); border-color: var(--rose); color: white; }
+        .slot-btn.disabled { opacity: .4; cursor: not-allowed; }
+        .slot-btn.full { background: #fef2f2; border-color: #fecaca; color: #ef4444; cursor: not-allowed; font-size: 0.7rem; }
+        .booking-price-display { background: var(--rose-pale); border: 1px solid #fce7f3; border-radius: var(--radius-sm); padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .booking-price-display span { font-size: 0.85rem; color: var(--rose-deep); font-weight: 500; }
+        .booking-price-display strong { font-size: 1.3rem; color: var(--rose); font-family: 'Playfair Display', serif; }
+        .capacity-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: var(--slate-600); margin-bottom: 16px; }
+        .capacity-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+        .capacity-dot.amber { background: #f59e0b; }
+        .capacity-dot.red { background: #ef4444; }
+
+        /* ─── TOAST ──────────────────────────────────── */
+        #toast-container { position: fixed; bottom: 28px; right: 28px; z-index: 999; display: flex; flex-direction: column; gap: 10px; }
+        .toast { background: white; border-radius: var(--radius-md); padding: 14px 20px; box-shadow: 0 8px 30px rgba(0,0,0,.12); border-left: 4px solid var(--rose); font-size: 0.875rem; color: var(--slate-800); display: flex; align-items: center; gap: 10px; animation: slideIn .3s ease; max-width: 320px; }
+        .toast.success { border-left-color: #16a34a; }
+        .toast.error { border-left-color: #ef4444; }
+        @keyframes slideIn { from { transform: translateX(110%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(110%); opacity: 0; } }
+
+        /* ─── WHATSAPP SECTION ───────────────────────── */
+        .whatsapp-divider { display: flex; align-items: center; gap: 14px; margin: 28px 0 24px; }
+        .whatsapp-divider::before, .whatsapp-divider::after { content:''; flex:1; height:1px; background: var(--slate-200); }
+        .whatsapp-divider span { font-size: 0.78rem; color: var(--slate-400); white-space: nowrap; font-weight: 500; }
+        .whatsapp-card { background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%); border: 1.5px solid #86efac; border-radius: var(--radius-md); padding: 22px; }
+        .whatsapp-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .whatsapp-card-header h4 { font-size: 0.95rem; font-weight: 700; color: #166534; }
+        .whatsapp-card p { font-size: 0.82rem; color: #15803d; line-height: 1.6; margin-bottom: 16px; }
+        .btn-whatsapp { display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: white; padding: 12px 22px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; text-decoration: none; border: none; cursor: pointer; transition: background .2s, transform .15s; box-shadow: 0 4px 14px rgba(37,211,102,.35); width: 100%; justify-content: center; }
+        .btn-whatsapp:hover { background: #1fba59; transform: translateY(-1px); }
+
+        /* ─── FOOTER ─────────────────────────────────── */
+        footer { background: var(--slate-800); color: #94a3b8; text-align: center; padding: 36px 5%; font-size: 0.85rem; }
+        footer strong { color: white; }
+
+        /* ─── MODAL ──────────────────────────────────── */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .25s; }
+        .modal-overlay.open { opacity: 1; pointer-events: all; }
+        .modal { background: white; border-radius: var(--radius-lg); padding: 36px; max-width: 480px; width: 100%; position: relative; transform: scale(.96); transition: transform .25s; }
+        .modal-overlay.open .modal { transform: scale(1); }
+        .modal-close { position: absolute; top: 16px; right: 16px; background: var(--slate-50); border: none; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; font-size: 1.1rem; color: var(--slate-600); display: flex; align-items: center; justify-content: center; }
+        .modal h3 { font-family: 'Playfair Display', serif; color: var(--indigo); margin-bottom: 6px; font-size: 1.4rem; }
+        .modal p { font-size: 0.875rem; color: var(--slate-600); margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav id="main-nav">
+        <a class="nav-brand" href="#">
+            <div class="nav-brand-icon">💇‍♀️</div>
+            <span class="nav-brand-text">Maria's Salon</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#styles">Styles</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#booking">Book Now</a></li>
+        </ul>
+        <a class="nav-cta" href="#booking">Book Appointment</a>
+        <button class="nav-mobile-toggle" aria-label="Menu">☰</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-text-panel">
+            <div class="hero-eyebrow">Now Accepting Bookings</div>
+            <h1 id="hero-headline">Flawless Plaits,<br><em>Every Time.</em></h1>
+            <p class="hero-sub" id="hero-sub">Lusaka's premier braiding studio. From knotless box braids to goddess locs — crafted with care, finished with precision.</p>
+            <div class="hero-actions">
+                <a class="btn-primary" href="#booking">Book Your Session</a>
+                <a class="btn-ghost" href="#styles">View Styles</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Happy Clients</div></div>
+                <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Slots Daily</div></div>
+                <div class="stat-item"><div class="stat-num">5★</div><div class="stat-label">Rated</div></div>
+            </div>
+        </div>
+        <div class="hero-image-panel">
+            <img id="hero-image" src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?w=900&q=80" alt="Maria's Salon – Featured Work">
+        </div>
+    </section>
+
+    <!-- STYLES CATALOG -->
+    <section id="styles">
+        <div class="section-header centered">
+            <p class="section-eyebrow">The Lookbook</p>
+            <h2 class="section-title">Choose Your Style</h2>
+            <p>Every look is priced transparently. Select your style below to get started with your booking.</p>
+        </div>
+        <div class="catalog-grid" id="styles-grid">
+            <div id="styles-empty-state" style="grid-column:1/-1;">
+                <div style="font-size:2rem;">✂️</div>
+                <p>Loading available styles…</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+        <div class="section-header">
+            <p class="section-eyebrow">Maria's Touch</p>
+            <h2 class="section-title">Portfolio & Finished Work</h2>
+            <p>A curated collection of transformations from our studio.</p>
+        </div>
+        <div class="gallery-masonry" id="gallery-grid">
+            <div id="gallery-loading" style="column-span:all; text-align:center; padding:40px; color:var(--slate-400);">
+                <p>Loading portfolio…</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOOKING -->
+    <section id="booking">
+        <div class="booking-wrapper">
+            <div>
+                <p class="section-eyebrow">Reserve Your Chair</p>
+                <h2 class="section-title">Book an Appointment</h2>
+                <p>We take a maximum of 3 clients per day to ensure every client gets Maria's full attention and best work.</p>
+                <div class="booking-features">
+                    <div class="booking-feature">
+                        <div class="booking-feature-icon">🗓️</div>
+                        <div class="booking-feature-text"><h4>Real-Time Availability</h4><p>See live slot availability before you book.</p></div>
+                    </div>
+                    <div class="booking-feature">
+                        <div class="booking-feature-icon">💬</div>
+                        <div class="booking-feature-text"><h4>Custom Requests Welcome</h4><p>Add specifications, inspo photos, or questions with your booking.</p></div>
+                    </div>
+                    <div class="booking-feature">
+                        <div class="booking-feature-icon">✅</div>
+                        <div class="booking-feature-text"><h4>Instant Confirmation</h4><p>Your slot is locked in immediately on submission.</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="booking-form-card">
+                <h3 style="font-family:'Playfair Display',serif; color:var(--indigo); margin-bottom:24px; font-size:1.3rem;">Your Details</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input class="form-control" type="text" id="f-name" placeholder="e.g., Thandiwe Banda" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email / Contact</label>
+                        <input class="form-control" type="text" id="f-email" placeholder="email or WhatsApp number" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Hairstyle</label>
+                    <select class="form-control" id="f-style" required>
+                        <option value="">— Select a style —</option>
+                    </select>
+                </div>
+
+                <div class="form-group length-selector" id="length-group">
+                    <label>Hair Length</label>
+                    <select class="form-control" id="f-length">
+                        <option value="Short">Short</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Long">Long</option>
+                    </select>
+                </div>
+
+                <div class="booking-price-display" id="price-display" style="display:none;">
+                    <span>Estimated Total</span>
+                    <strong id="price-value">K0</strong>
+                </div>
+
+                <div class="form-group">
+                    <label>Appointment Date</label>
+                    <input class="form-control" type="date" id="f-date" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Time Slot <span id="capacity-badge" class="capacity-indicator" style="display:inline-flex;"></span></label>
+                    <div class="slots-grid" id="slots-grid">
+                        <button type="button" class="slot-btn" data-slot="08:00 AM">08:00 AM</button>
+                        <button type="button" class="slot-btn" data-slot="11:00 AM">11:00 AM</button>
+                        <button type="button" class="slot-btn" data-slot="02:00 PM">02:00 PM</button>
+                    </div>
+                    <input type="hidden" id="f-slot" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Special Requests / Questions <span style="font-weight:400; color:var(--slate-400);">(optional)</span></label>
+                    <textarea class="form-control" id="f-specs" placeholder="e.g., I'd like medium-sized box braids, colour: burgundy tips. Any questions welcome!"></textarea>
+                </div>
+
+                <button class="btn-primary" style="width:100%; border-radius:8px; padding:14px;" id="book-btn" onclick="submitBooking()">
+                    Confirm Booking →
+                </button>
+                <p style="font-size:0.75rem; color:var(--slate-400); text-align:center; margin-top:12px;">By booking you agree to arrive within 15 minutes of your slot.</p>
+
+                <!-- WHATSAPP ALTERNATIVE -->
+                <div class="whatsapp-divider"><span>or prefer to chat directly?</span></div>
+                <div class="whatsapp-card">
+                    <div class="whatsapp-card-header">
+                        <span style="font-size:1.4rem;">💬</span>
+                        <h4>Book via WhatsApp</h4>
+                    </div>
+                    <p>Rather chat with Maria directly? Tap below to send a pre-filled WhatsApp message with your booking details. Maria will confirm your slot personally.</p>
+                    <button class="btn-whatsapp" onclick="bookViaWhatsApp()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.535 5.845L.057 23.492a.5.5 0 0 0 .609.61l5.739-1.498A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.667-.502-5.198-1.38l-.374-.217-3.865 1.009 1.025-3.748-.237-.386A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+                        Chat on WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STYLE QUICK-BOOK MODAL -->
+    <div class="modal-overlay" id="style-modal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h3 id="modal-style-name">Knotless Box Braids</h3>
+            <p id="modal-style-prices">Starting from K200</p>
+            <img id="modal-style-img" src="" alt="" style="width:100%; border-radius:10px; object-fit:cover; height:200px; margin-bottom:20px;">
+            <button class="btn-primary" style="width:100%; border-radius:8px;" onclick="bookFromModal()">Book This Style →</button>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container"></div>
+
+    <footer>
+        <strong>Maria's Salon</strong> — Lusaka's Premier Hair Studio &nbsp;·&nbsp;
+        Max 3 clients per day &nbsp;·&nbsp; Built with ❤️
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0vagMFgcrETgAOL7qY3FyKpK5ZIoScck",
+            authDomain: "maria-s-hair-salon.firebaseapp.com",
+            databaseURL: "https://maria-s-hair-salon-default-rtdb.firebaseio.com"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // ── EMAILJS INIT ─────────────────────────────────
+        emailjs.init('QVH_ZboyoAdO1F_Xk');
+
+        // ── TOAST ────────────────────────────────────────
+        function toast(msg, type = 'info') {
+            const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+            const el = document.createElement('div');
+            el.className = `toast ${type}`;
+            el.innerHTML = `<span>${icons[type]}</span> ${msg}`;
+            document.getElementById('toast-container').appendChild(el);
+            setTimeout(() => {
+                el.style.animation = 'slideOut .3s ease forwards';
+                setTimeout(() => el.remove(), 300);
+            }, 4000);
+        }
+
+        // ── NAV SCROLL ───────────────────────────────────
+        window.addEventListener('scroll', () => {
+            document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // ── HERO CONFIG ──────────────────────────────────
+        onValue(ref(db, 'salon/heroConfig'), (snap) => {
+            if (snap.val()) {
+                const d = snap.val();
+                if (d.headline) document.getElementById('hero-headline').innerHTML = d.headline;
+                if (d.subtext)   document.getElementById('hero-sub').textContent = d.subtext;
+                if (d.imageUrl)  document.getElementById('hero-image').src = d.imageUrl;
+            }
+        });
+
+        // ── GALLERY ──────────────────────────────────────
+        onValue(ref(db, 'salon/gallery'), (snap) => {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
+            if (!snap.exists()) {
+                grid.innerHTML = '<div id="gallery-empty" style="column-span:all;text-align:center;padding:40px;color:var(--slate-400);">No portfolio images yet — check back soon!</div>';
+                return;
+            }
+            Object.values(snap.val()).forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.innerHTML = `<img src="${item.imageUrl}" alt="Maria's work" loading="lazy"><div class="gallery-item-overlay">🔍</div>`;
+                grid.appendChild(div);
+            });
+        });
+
+        // ── STYLES CATALOG ───────────────────────────────
+        let stylesData = {};
+        onValue(ref(db, 'salon/styles'), (snap) => {
+            stylesData = {};
+            const grid = document.getElementById('styles-grid');
+            const select = document.getElementById('f-style');
+            grid.innerHTML = '';
+            select.innerHTML = '<option value="">— Select a style —</option>';
+
+            if (!snap.exists()) {
+                grid.innerHTML = '<div id="styles-empty-state" style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--slate-400);"><div style="font-size:2rem;">✂️</div><p>No styles published yet.</p></div>';
+                return;
+            }
+
+            Object.entries(snap.val()).forEach(([id, item]) => {
+                stylesData[id] = item;
+
+                // Card
+                let priceHTML = item.isShortOnly
+                    ? `<span class="price-chip constant">K${item.priceShort} flat</span>`
+                    : `<span class="price-chip">Short K${item.priceShort}</span><span class="price-chip">Med K${item.priceMedium}</span><span class="price-chip">Long K${item.priceLong}</span>`;
+
+                const card = document.createElement('div');
+                card.className = 'style-card';
+                card.innerHTML = `
+                    ${item.imageUrl ? `<img class="style-card-img" src="${item.imageUrl}" alt="${item.name}" loading="lazy">` : `<div class="style-card-img-placeholder">✂️</div>`}
+                    <div class="style-card-body">
+                        <div class="style-card-name">${item.name}</div>
+                        <div class="price-row">${priceHTML}</div>
+                        <button class="style-card-action" onclick="openStyleModal('${id}')">View & Book →</button>
+                    </div>`;
+                grid.appendChild(card);
+
+                // Select option
+                const opt = document.createElement('option');
+                opt.value = id;
+                opt.textContent = item.name;
+                select.appendChild(opt);
+            });
+        });
+
+        // ── MODAL ────────────────────────────────────────
+        window.openStyleModal = function(id) {
+            const item = stylesData[id];
+            document.getElementById('modal-style-name').textContent = item.name;
+            document.getElementById('modal-style-img').src = item.imageUrl || '';
+            document.getElementById('modal-style-img').style.display = item.imageUrl ? 'block' : 'none';
+            const priceText = item.isShortOnly ? `K${item.priceShort} (Short only)` : `Short K${item.priceShort} · Med K${item.priceMedium} · Long K${item.priceLong}`;
+            document.getElementById('modal-style-prices').textContent = priceText;
+            document.getElementById('style-modal').dataset.styleId = id;
+            document.getElementById('style-modal').classList.add('open');
+        };
+
+        window.closeModal = function() {
+            document.getElementById('style-modal').classList.remove('open');
+        };
+
+        window.bookFromModal = function() {
+            const id = document.getElementById('style-modal').dataset.styleId;
+            document.getElementById('f-style').value = id;
+            document.getElementById('f-style').dispatchEvent(new Event('change'));
+            closeModal();
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        document.getElementById('style-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // ── FORM LOGIC ───────────────────────────────────
+        const fStyle  = document.getElementById('f-style');
+        const fLength = document.getElementById('f-length');
+        const fDate   = document.getElementById('f-date');
+
+        // Set min date to today
+        const today = new Date().toISOString().split('T')[0];
+        fDate.min = today;
+
+        fStyle.addEventListener('change', updatePriceAndLength);
+        fLength.addEventListener('change', updatePriceAndLength);
+
+        function updatePriceAndLength() {
+            const id = fStyle.value;
+            const item = stylesData[id];
+            const lengthGroup = document.getElementById('length-group');
+            const priceDisplay = document.getElementById('price-display');
+            const priceValue = document.getElementById('price-value');
+
+            if (!item) { lengthGroup.classList.remove('visible'); priceDisplay.style.display = 'none'; return; }
+
+            if (item.isShortOnly) {
+                lengthGroup.classList.remove('visible');
+                priceValue.textContent = `K${item.priceShort}`;
+            } else {
+                lengthGroup.classList.add('visible');
+                const len = fLength.value;
+                const prices = { Short: item.priceShort, Medium: item.priceMedium, Long: item.priceLong };
+                priceValue.textContent = `K${prices[len] || item.priceShort}`;
+            }
+            priceDisplay.style.display = 'flex';
+        }
+
+        // Slot selection
+        let selectedSlot = '';
+        document.querySelectorAll('.slot-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.classList.contains('disabled') || this.classList.contains('full')) return;
+                document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSlot = this.dataset.slot;
+                document.getElementById('f-slot').value = selectedSlot;
+            });
+        });
+
+        // Check capacity for selected date
+        fDate.addEventListener('change', async function() {
+            const date = this.value;
+            document.querySelectorAll('.slot-btn').forEach(b => { b.classList.remove('full', 'disabled'); b.textContent = b.dataset.slot; });
+
+            const snap = await get(ref(db, 'salon/bookings'));
+            if (!snap.exists()) return;
+
+            const dayBookings = Object.values(snap.val()).filter(b => b.appointmentDate === date);
+            const slotCounts = {};
+            dayBookings.forEach(b => { slotCounts[b.appointmentSlot] = (slotCounts[b.appointmentSlot] || 0) + 1; });
+
+            document.querySelectorAll('.slot-btn').forEach(btn => {
+                const slot = btn.dataset.slot;
+                if (slotCounts[slot] >= 1) { btn.classList.add('full'); btn.textContent = 'Booked'; }
+            });
+
+            const total = dayBookings.length;
+            const badge = document.getElementById('capacity-badge');
+            if (total >= 3) {
+                badge.innerHTML = '<span class="capacity-dot red"></span> Fully booked this day';
+            } else if (total >= 2) {
+                badge.innerHTML = '<span class="capacity-dot amber"></span> 1 slot remaining';
+            } else {
+                badge.innerHTML = `<span class="capacity-dot"></span> ${3 - total} slots open`;
+            }
+        });
+
+        // ── SUBMIT ───────────────────────────────────────
+        window.submitBooking = async function() {
+            const name    = document.getElementById('f-name').value.trim();
+            const email   = document.getElementById('f-email').value.trim();
+            const styleId = document.getElementById('f-style').value;
+            const date    = document.getElementById('f-date').value;
+            const slot    = document.getElementById('f-slot').value;
+            const specs   = document.getElementById('f-specs').value.trim();
+
+            if (!name || !email || !styleId || !date || !slot) {
+                toast('Please fill in all required fields and select a time slot.', 'error'); return;
+            }
+
+            const item   = stylesData[styleId];
+            const length = item.isShortOnly ? 'Short' : document.getElementById('f-length').value;
+            const prices = { Short: item.priceShort, Medium: item.priceMedium, Long: item.priceLong };
+            const price  = item.isShortOnly ? item.priceShort : prices[length];
+
+            // Check capacity
+            const snap = await get(ref(db, 'salon/bookings'));
+            if (snap.exists()) {
+                const dayBookings = Object.values(snap.val()).filter(b => b.appointmentDate === date);
+                if (dayBookings.length >= 3) { toast('Sorry, this day is fully booked. Please choose another date.', 'error'); return; }
+                const slotTaken = dayBookings.some(b => b.appointmentSlot === slot);
+                if (slotTaken) { toast('That time slot just got booked. Please select another.', 'error'); return; }
+            }
+
+            const btn = document.getElementById('book-btn');
+            btn.textContent = 'Confirming…'; btn.disabled = true;
+
+            const bookingData = {
+                customerName: name,
+                customerEmail: email,
+                hairstyle: item.name,
+                styleLength: length,
+                finalPrice: `K${price}`,
+                appointmentDate: date,
+                appointmentSlot: slot,
+                userSpecifications: specs || 'None.',
+                bookingType: 'email',
+                timestamp: Date.now()
+            };
+
+            try {
+                // 1. Save to Firebase
+                await push(ref(db, 'salon/bookings'), bookingData);
+
+                // 2. Send EmailJS notification to Maria
+                await emailjs.send('service_mgf9voa', 'template_l1hp20d', {
+                    customer_name:    name,
+                    customer_email:   email,
+                    hairstyle:        `${item.name} — ${length}`,
+                    appointment_time: `${date} at ${slot}`,
+                    notes:            specs || 'No special requests.'
+                });
+
+                toast(`🎉 Booking confirmed! Maria has been notified.`, 'success');
+                ['f-name','f-email','f-specs'].forEach(id => document.getElementById(id).value = '');
+                document.getElementById('f-style').value = '';
+                document.getElementById('f-date').value = '';
+                document.getElementById('f-slot').value = '';
+                document.getElementById('price-display').style.display = 'none';
+                document.getElementById('length-group').classList.remove('visible');
+                document.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+                selectedSlot = '';
+
+            } catch (err) {
+                console.error(err);
+                // If Firebase saved but email failed, still show success but warn
+                if (err.status) {
+                    toast('Booking saved! Email notification may be delayed — Maria will still see it in the admin panel.', 'info');
+                } else {
+                    toast('Something went wrong. Please try again.', 'error');
+                }
+            }
+
+            btn.textContent = 'Confirm Booking →'; btn.disabled = false;
+        };
+
+        // ── WHATSAPP BOOKING ─────────────────────────────
+        window.bookViaWhatsApp = function() {
+            const name    = document.getElementById('f-name').value.trim();
+            const styleId = document.getElementById('f-style').value;
+            const date    = document.getElementById('f-date').value;
+            const slot    = document.getElementById('f-slot').value;
+            const specs   = document.getElementById('f-specs').value.trim();
+
+            const item   = stylesData[styleId];
+            const length = item && !item.isShortOnly ? document.getElementById('f-length').value : 'Short';
+            const prices = item ? { Short: item.priceShort, Medium: item.priceMedium, Long: item.priceLong } : {};
+            const price  = item ? (item.isShortOnly ? item.priceShort : prices[length]) : '—';
+
+            // Build a friendly WhatsApp message
+            const styleLine  = item ? `${item.name} (${length}) — K${price}` : 'Not selected yet';
+            const dateLine   = date && slot ? `${date} at ${slot}` : 'Not selected yet';
+            const notesLine  = specs || 'None';
+            const nameLine   = name || 'Not provided';
+
+            const msg = `Hi Maria! 👋 I'd like to book an appointment:\n\n` +
+                        `👤 Name: ${nameLine}\n` +
+                        `✂️ Style: ${styleLine}\n` +
+                        `📅 Date & Slot: ${dateLine}\n` +
+                        `📝 Notes: ${notesLine}\n\n` +
+                        `Please confirm my slot. Thank you! 🙏`;
+
+            // Save a pending WhatsApp booking record to Firebase so Maria sees it in admin
+            push(ref(db, 'salon/bookings'), {
+                customerName:      nameLine,
+                customerEmail:     'WhatsApp Enquiry',
+                hairstyle:         item ? item.name : 'Not selected',
+                styleLength:       length,
+                finalPrice:        item ? `K${price}` : 'TBD',
+                appointmentDate:   date || 'TBD',
+                appointmentSlot:   slot || 'TBD',
+                userSpecifications: specs || 'Sent via WhatsApp.',
+                bookingType:       'whatsapp',
+                timestamp:         Date.now()
+            });
+
+            // Open WhatsApp — replace with Maria's actual number
+            const phone = '260XXXXXXXXX'; // ← Replace with Maria's WhatsApp number e.g. 260977123456
+            const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank');
+
+            toast('Opening WhatsApp — your booking summary has been logged for Maria.', 'success');
+        };
+    </script>
+</body>
+</html>
